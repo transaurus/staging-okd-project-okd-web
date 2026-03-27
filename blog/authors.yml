@@ -1,0 +1,33 @@
+jmeng:
+  name: Jakob Meng
+  title: Red Hat
+  url: https://github.com/jm1
+  image_url: https://github.com/jm1.png
+dmueller:
+  name: Diane Mueller
+  title: Red Hat
+  url: https://github.com/dmueller2001
+  image_url: https://github.com/dmueller2001.png
+zedsm:
+  name: Zed Spencer-Milnes
+  title: Co-chair, OKD Working Group
+  url: https://github.com/GingerGeek
+  image_url: https://github.com/GingerGeek.png
+  socials:
+    x: GingerGeek
+    github: GingerGeek
+    bluesky: gingergeek.co.uk
+    linkedin: zedspencermilnes
+jaimemagiera:
+  name: Jaime Magiera
+  title: Co-chair, OKD Working Group
+  url: https://github.com/JaimeMagiera
+  image_url: https://github.com/JaimeMagiera.png
+  socials:
+    github: JaimeMagiera
+    linkedin: jaime-magiera
+Prashanth684:
+  name: Prashanth Sundararaman
+  title: Red Hat
+  url: https://github.com/Prashanth684
+  image_url: https://github.com/Prashanth684.png

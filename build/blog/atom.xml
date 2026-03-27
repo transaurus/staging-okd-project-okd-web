@@ -1,0 +1,923 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://okd.io/blog</id>
+    <title>OKD Kubernetes Platform Blog</title>
+    <updated>2026-01-26T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://okd.io/blog"/>
+    <subtitle>OKD Kubernetes Platform Blog</subtitle>
+    <entry>
+        <title type="html"><![CDATA[OKD 4.21 Release Notes]]></title>
+        <id>https://okd.io/blog/2026/01/26/okd-4.21-release-notes</id>
+        <link href="https://okd.io/blog/2026/01/26/okd-4.21-release-notes"/>
+        <updated>2026-01-26T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Release Notes: 4.21.0-okd-scos.0]]></summary>
+        <content type="html"><![CDATA[<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="release-notes-4210-okd-scos0">Release Notes: 4.21.0-okd-scos.0<a href="https://okd.io/blog/2026/01/26/okd-4.21-release-notes#release-notes-4210-okd-scos0" class="hash-link" aria-label="Direct link to Release Notes: 4.21.0-okd-scos.0" title="Direct link to Release Notes: 4.21.0-okd-scos.0" translate="no">​</a></h2>
+<p>This release introduces significant updates to storage management, security hardening via read-only filesystems, and the promotion of several Tech Preview features to General Availability (GA). <a href="https://amd64.origin.releases.ci.openshift.org/releasestream/4-scos-stable/release/4.21.0-okd-scos.0" target="_blank" rel="noopener noreferrer" class="">4.21.0-okd-scos.0</a> is the source of this information.</p>
+<div class="theme-admonition theme-admonition-info admonition_xJq3 alert alert--info"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>info</div><div class="admonitionContent_BuS1"><p>These release notes are non-exhaustive. OKD contains many component project and you can ue the CI produced notes to fully review
+all the changes that have been made. Let us know if you see any errors or large omissions!</p></div></div>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="storage">Storage<a href="https://okd.io/blog/2026/01/26/okd-4.21-release-notes#storage" class="hash-link" aria-label="Direct link to Storage" title="Direct link to Storage" translate="no">​</a></h3>
+<ul>
+<li class="">
+<p><strong>Azure File Volume Cloning (GA):</strong> Cloning Azure File volumes by referencing a source PersistentVolumeClaim (PVC) is now Generally Available, supporting both SMB and NFS protocols (<a href="https://issues.redhat.com/browse/STOR-1945" target="_blank" rel="noopener noreferrer" class="">STOR-1945</a>).</p>
+</li>
+<li class="">
+<p><strong>VolumeAttributesClass (GA):</strong> Admins can now define and modify storage attributes (like IOPS or throughput) on provisioned volumes after creation (<a href="https://issues.redhat.com/browse/STOR-2533" target="_blank" rel="noopener noreferrer" class="">STOR-2533</a>).</p>
+</li>
+<li class="">
+<p><strong>Mutable CSI Node Allocatable Property (Tech Preview):</strong> Allows the number of attachable volumes per node to be dynamically updated based on node capacity changes (e.g., adding a new network interface on AWS) (<a href="https://issues.redhat.com/browse/STOR-2627" target="_blank" rel="noopener noreferrer" class="">STOR-2627</a>).</p>
+</li>
+<li class="">
+<p><strong>vSphere with Bare Metal Nodes (Tech Preview):</strong> Environments can now include bare metal nodes, requiring the vSphere CSI driver to be disabled to avoid a degraded state (<a href="https://issues.redhat.com/browse/STOR-2620" target="_blank" rel="noopener noreferrer" class="">STOR-2620</a>, <a href="https://issues.redhat.com/browse/STOR-2634" target="_blank" rel="noopener noreferrer" class="">STOR-2634</a>).</p>
+</li>
+<li class="">
+<p><strong>API and Diagnostics:</strong></p>
+</li>
+<li class="">
+<p>Volume Group Snapshots API updated to <code>v1beta2</code>; <code>v1beta1</code> is removed (<a href="https://issues.redhat.com/browse/STOR-2534" target="_blank" rel="noopener noreferrer" class="">STOR-2534</a>).</p>
+</li>
+<li class="">
+<p><code>must-gather</code> now collects <code>VolumeAttributesClass</code>, <code>VolumeGroupSnapshotClass</code>, and <code>VolumeGroupSnapshotContent</code> resources (<a href="https://issues.redhat.com/browse/STOR-2691" target="_blank" rel="noopener noreferrer" class="">STOR-2691</a>, <a href="https://issues.redhat.com/browse/STOR-2692" target="_blank" rel="noopener noreferrer" class="">STOR-2692</a>).</p>
+</li>
+<li class="">
+<p><strong>Security Hardening:</strong> CSI driver containers and the Cluster Storage Operator now utilize <strong>read-only root filesystems</strong> and enhanced <strong>Network Policies</strong> (<a href="https://issues.redhat.com/browse/STOR-2340" target="_blank" rel="noopener noreferrer" class="">STOR-2340</a>, <a href="https://issues.redhat.com/browse/STOR-2560" target="_blank" rel="noopener noreferrer" class="">STOR-2560</a>).</p>
+</li>
+<li class="">
+<p><strong>Driver Updates:</strong> AWS EBS and EFS CSI drivers migrated to AWS SDK v2 (<a href="https://issues.redhat.com/browse/STOR-2538" target="_blank" rel="noopener noreferrer" class="">STOR-2538</a>). The <strong>oVirt CSI Driver</strong> has been removed (<a href="https://issues.redhat.com/browse/STOR-2297" target="_blank" rel="noopener noreferrer" class="">STOR-2297</a>).</p>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="platform-and-installation">Platform and Installation<a href="https://okd.io/blog/2026/01/26/okd-4.21-release-notes#platform-and-installation" class="hash-link" aria-label="Direct link to Platform and Installation" title="Direct link to Platform and Installation" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="vsphere-enhancements">vSphere Enhancements<a href="https://okd.io/blog/2026/01/26/okd-4.21-release-notes#vsphere-enhancements" class="hash-link" aria-label="Direct link to vSphere Enhancements" title="Direct link to vSphere Enhancements" translate="no">​</a></h4>
+<ul>
+<li class=""><strong>vSphere 7.x Deprecation:</strong> Support for vSphere 7.x is entering deprecation. Non-blocking warnings will appear during IPI installations unless an extended support contract is detected (<a href="https://issues.redhat.com/browse/SPLAT-2347" target="_blank" rel="noopener noreferrer" class="">SPLAT-2347</a>, <a href="https://issues.redhat.com/browse/SPLAT-2511" target="_blank" rel="noopener noreferrer" class="">SPLAT-2511</a>).</li>
+<li class=""><strong>Secure Boot:</strong> The installer no longer disables Secure Boot if it is enabled in the underlying OVA template (<a href="https://issues.redhat.com/browse/OKD-279" target="_blank" rel="noopener noreferrer" class="">OKD-279</a>).</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="aws-and-gcp-updates">AWS and GCP Updates<a href="https://okd.io/blog/2026/01/26/okd-4.21-release-notes#aws-and-gcp-updates" class="hash-link" aria-label="Direct link to AWS and GCP Updates" title="Direct link to AWS and GCP Updates" translate="no">​</a></h4>
+<ul>
+<li class=""><strong>AWS Network Load Balancers (NLB):</strong> Support added for NLBs with associated Security Groups (<a href="https://issues.redhat.com/browse/SPLAT-2137" target="_blank" rel="noopener noreferrer" class="">SPLAT-2137</a>).</li>
+<li class=""><strong>AWS EC2 Dedicated Hosts (Tech Preview):</strong> Support is being introduced for provisioning nodes on managed or BYO dedicated hosts (<a href="https://issues.redhat.com/browse/SPLAT-2193" target="_blank" rel="noopener noreferrer" class="">SPLAT-2193</a>).</li>
+<li class=""><strong>GCP Spot VMs:</strong> Users can now create worker nodes using GCP Spot VMs by setting <code>provisioningModel: "Spot"</code> (<a href="https://issues.redhat.com/browse/OCPCLOUD-3173" target="_blank" rel="noopener noreferrer" class="">OCPCLOUD-3173</a>).</li>
+<li class=""><strong>GCP Private Service Connect:</strong> Support added for private connections to Google APIs, including private DNS zone creation (<a href="https://issues.redhat.com/browse/CORS-4258" target="_blank" rel="noopener noreferrer" class="">CORS-4258</a>). Legacy custom endpoints have been removed (<a href="https://issues.redhat.com/browse/CORS-4281" target="_blank" rel="noopener noreferrer" class="">CORS-4281</a>).</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="agent-based-installer">Agent-based Installer<a href="https://okd.io/blog/2026/01/26/okd-4.21-release-notes#agent-based-installer" class="hash-link" aria-label="Direct link to Agent-based Installer" title="Direct link to Agent-based Installer" translate="no">​</a></h4>
+<ul>
+<li class=""><strong>Disconnected Environments:</strong> Introduction of the <code>InternalReleaseImage</code> (IRI) API to manage local registries on nodes for installations without external registries (<a href="https://issues.redhat.com/browse/AGENT-1282" target="_blank" rel="noopener noreferrer" class="">AGENT-1282</a>, <a href="https://issues.redhat.com/browse/AGENT-1330" target="_blank" rel="noopener noreferrer" class="">AGENT-1330</a>).</li>
+<li class=""><strong>Offline OLM:</strong> Facilitates operator installation in offline environments via the <code>agent-olm-operators</code> ConfigMap (<a href="https://issues.redhat.com/browse/AGENT-1248" target="_blank" rel="noopener noreferrer" class="">AGENT-1248</a>).</li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="networking">Networking<a href="https://okd.io/blog/2026/01/26/okd-4.21-release-notes#networking" class="hash-link" aria-label="Direct link to Networking" title="Direct link to Networking" translate="no">​</a></h3>
+<ul>
+<li class=""><strong>Static IP and MAC for VMs (GA):</strong> Persistent network identity is now supported for Virtual Machines on secondary Layer 2 User-Defined Networks (UDNs) (<a href="https://issues.redhat.com/browse/CORENET-6005" target="_blank" rel="noopener noreferrer" class="">CORENET-6005</a>).</li>
+<li class=""><strong>MAC Conflict Detection:</strong> OVN-Kubernetes now automatically prevents duplicate MAC address assignments (<a href="https://issues.redhat.com/browse/CORENET-6160" target="_blank" rel="noopener noreferrer" class="">CORENET-6160</a>).</li>
+<li class=""><strong>Gateway API:</strong> Upgraded to v1.3.0. Supports the Gateway API Inference Extension (GIE) for RHOAI workloads (<a href="https://issues.redhat.com/browse/NE-2161" target="_blank" rel="noopener noreferrer" class="">NE-2161</a>, <a href="https://issues.redhat.com/browse/NE-2050" target="_blank" rel="noopener noreferrer" class="">NE-2050</a>).</li>
+<li class=""><strong>Core Components:</strong> CoreDNS rebased to v1.13.1. Networking components updated to align with Kubernetes 1.34 (<a href="https://issues.redhat.com/browse/NE-2194" target="_blank" rel="noopener noreferrer" class="">NE-2194</a>).</li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="node-and-machine-management">Node and Machine Management<a href="https://okd.io/blog/2026/01/26/okd-4.21-release-notes#node-and-machine-management" class="hash-link" aria-label="Direct link to Node and Machine Management" title="Direct link to Node and Machine Management" translate="no">​</a></h3>
+<ul>
+<li class="">
+<p><strong>Dynamic Resource Allocation (DRA) (GA):</strong> The <code>v1</code> DRA API is now standard and enabled by default (<a href="https://issues.redhat.com/browse/OCPNODE-3779" target="_blank" rel="noopener noreferrer" class="">OCPNODE-3779</a>).</p>
+</li>
+<li class="">
+<p><strong>Machine Config Operator (MCO):</strong></p>
+</li>
+<li class="">
+<p><strong>Dual OS Stream (Tech Preview):</strong> Allows different machine pools to use different OS versions (e.g., RHEL 9 and 10) in the same cluster (<a href="https://issues.redhat.com/browse/MCO-1927" target="_blank" rel="noopener noreferrer" class="">MCO-1927</a>).</p>
+</li>
+<li class="">
+<p><strong>Boot Image Skew Enforcement (Tech Preview):</strong> Manages boot image versions across nodes to prevent configuration drift (<a href="https://issues.redhat.com/browse/MCO-1962" target="_blank" rel="noopener noreferrer" class="">MCO-1962</a>).</p>
+</li>
+<li class="">
+<p><strong>Resource Reservations:</strong> <code>autoSizingReserved</code> in <code>KubeletConfig</code> is now enabled by default for new clusters to optimize system resource reservation (<a href="https://issues.redhat.com/browse/OCPNODE-3719" target="_blank" rel="noopener noreferrer" class="">OCPNODE-3719</a>).</p>
+</li>
+<li class="">
+<p><strong>Container Runtime:</strong> OKD clusters now default to the <code>crun</code> container runtime; the temporary <code>runc</code> override has been removed (<a href="https://issues.redhat.com/browse/OKD-294" target="_blank" rel="noopener noreferrer" class="">OKD-294</a>).</p>
+</li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="operator-lifecycle-manager-olm-and-console">Operator Lifecycle Manager (OLM) and Console<a href="https://okd.io/blog/2026/01/26/okd-4.21-release-notes#operator-lifecycle-manager-olm-and-console" class="hash-link" aria-label="Direct link to Operator Lifecycle Manager (OLM) and Console" title="Direct link to Operator Lifecycle Manager (OLM) and Console" translate="no">​</a></h3>
+<ul>
+<li class=""><strong>OLMv1 Promotions:</strong> <code>SingleNamespace</code> and <code>OwnNamespace</code> install modes, and the Webhook Provider, are now <strong>Generally Available</strong> (<a href="https://issues.redhat.com/browse/OPRUN-4131" target="_blank" rel="noopener noreferrer" class="">OPRUN-4131</a>, <a href="https://issues.redhat.com/browse/OPRUN-4156" target="_blank" rel="noopener noreferrer" class="">OPRUN-4156</a>).</li>
+<li class=""><strong>Console Modernization:</strong> * Developer monitoring views (Dashboards, Targets) are now integrated into the <strong>Admin Perspective</strong> (<a href="https://issues.redhat.com/browse/OU-1130" target="_blank" rel="noopener noreferrer" class="">OU-1130</a>).</li>
+<li class="">List pages have been updated to the new <code>DataView</code> component for better performance.</li>
+<li class="">The Monaco Code Editor now supports theme and font size customization.</li>
+</ul>]]></content>
+        <author>
+            <name>Prashanth Sundararaman</name>
+            <uri>https://github.com/Prashanth684</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[OKD 4.20 Release Issues]]></title>
+        <id>https://okd.io/blog/2025/09/30/2025-4.20-release-issues</id>
+        <link href="https://okd.io/blog/2025/09/30/2025-4.20-release-issues"/>
+        <updated>2025-09-30T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[With OKD 4.20 officially released, several issues have surfaced. Below are brief descriptions of each issue and suggested workarounds. Please reach out if you come across additional issues.]]></summary>
+        <content type="html"><![CDATA[<p>With OKD 4.20 officially released, several issues have surfaced. Below are brief descriptions of each issue and suggested workarounds. Please reach out if you come across additional issues.</p>
+<p><a href="https://github.com/okd-project/okd/issues/2255" target="_blank" rel="noopener noreferrer" class="">2255: Upgrade to 4.20.0-okd-scos.0 - nodes fail to start due to incorrect runtime</a></p>
+<p>Effects: Upgrades from 4.18 or lower to 4.20</p>
+<p>If a cluster was originally installed with 4.18 or earlier, there will exist two machine config objects (one for worker and one for master nodes), that explicitly override the container runtime to be runc:</p>
+<ul>
+<li class="">00-override-master-generated-crio-default-container-runtime</li>
+<li class="">00-override-worker-generated-crio-default-container-runtime</li>
+</ul>
+<p>These two machine config objects can simply be deleted before initiating the upgrade to 4.20. Doing so will change the container runtime to crun immediately, for the current cluster version. This means the machine config operator will reconfigure and restart all nodes. This should complete before the upgrade to 4.20 is initiated.</p>]]></content>
+        <author>
+            <name>Jaime Magiera</name>
+            <uri>https://github.com/JaimeMagiera</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[OKD 4.20 Release Notes]]></title>
+        <id>https://okd.io/blog/2025/09/30/okd-4.20-release-notes</id>
+        <link href="https://okd.io/blog/2025/09/30/okd-4.20-release-notes"/>
+        <updated>2025-09-30T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Release Notes: 4.20.0-okd-scos.0]]></summary>
+        <content type="html"><![CDATA[<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="release-notes-4200-okd-scos0">Release Notes: 4.20.0-okd-scos.0<a href="https://okd.io/blog/2025/09/30/okd-4.20-release-notes#release-notes-4200-okd-scos0" class="hash-link" aria-label="Direct link to Release Notes: 4.20.0-okd-scos.0" title="Direct link to Release Notes: 4.20.0-okd-scos.0" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="introduction-transition-to-centos-stream-10">Introduction: Transition to CentOS Stream 10<a href="https://okd.io/blog/2025/09/30/okd-4.20-release-notes#introduction-transition-to-centos-stream-10" class="hash-link" aria-label="Direct link to Introduction: Transition to CentOS Stream 10" title="Direct link to Introduction: Transition to CentOS Stream 10" translate="no">​</a></h3>
+<p>OKD 4.20 marks a significant platform update, transitioning the underlying operating system from Fedora CoreOS (FCOS) to <strong>CentOS Stream 10</strong>. This strategic change aligns OKD with the future development of OpenShift on RHEL 10, providing early feedback and enhancing stability for the community distribution (<a href="https://issues.redhat.com/browse/OKD-240" target="_blank" rel="noopener noreferrer" class="">OKD-240</a>, <a href="https://issues.redhat.com/browse/OKD-241" target="_blank" rel="noopener noreferrer" class="">OKD-241</a>).</p>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="installation-and-platform-management">Installation and Platform Management<a href="https://okd.io/blog/2025/09/30/okd-4.20-release-notes#installation-and-platform-management" class="hash-link" aria-label="Direct link to Installation and Platform Management" title="Direct link to Installation and Platform Management" translate="no">​</a></h3>
+<p>This release introduces major enhancements to platform architecture, installation flexibility, and day-to-day cluster management.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="platform-and-architecture">Platform and Architecture<a href="https://okd.io/blog/2025/09/30/okd-4.20-release-notes#platform-and-architecture" class="hash-link" aria-label="Direct link to Platform and Architecture" title="Direct link to Platform and Architecture" translate="no">​</a></h4>
+<ul>
+<li class=""><strong>Migration to Cluster API (CAPI):</strong> The Machine API (MAPI) is migrating its underlying implementation to use Cluster API (CAPI) for AWS and standalone clusters. This change is transparent to users, and the existing MAPI remains fully supported. A new CAPI operator manages components and enhances load balancer management on AWS, Azure, and GCP.</li>
+<li class=""><strong>Selectable etcd Database Size (GA):</strong> You can now configure the etcd database size beyond its previous 8GB limit. This feature is now <strong>Generally Available</strong> and helps support large or dense clusters (<a href="https://issues.redhat.com/browse/ETCD-638" target="_blank" rel="noopener noreferrer" class="">ETCD-638</a>). Liveness probes are now tuned dynamically based on the database quota to improve stability (<a href="https://issues.redhat.com/browse/ETCD-590" target="_blank" rel="noopener noreferrer" class="">ETCD-590</a>).</li>
+<li class=""><strong>Two-Node Cluster Non-Graceful Recovery:</strong> For two-node edge deployments, the cluster can now automatically recover from ungraceful shutdown events like power loss. One node will "fence" the other, restart etcd, and allow the failed node to rejoin safely, improving resilience without manual intervention (Ocpedge-1755).</li>
+<li class=""><strong>AutoNode for ROSA-HCP:</strong> A new node autoscaling solution named <strong>AutoNode</strong>, powered by Karpenter, is available for ROSA with Hosted Control Planes (ROSA-HCP).</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="installation-and-updates">Installation and Updates<a href="https://okd.io/blog/2025/09/30/okd-4.20-release-notes#installation-and-updates" class="hash-link" aria-label="Direct link to Installation and Updates" title="Direct link to Installation and Updates" translate="no">​</a></h4>
+<ul>
+<li class=""><strong>Update Precheck Command:</strong> A new <code>oc adm upgrade recommend</code> command helps administrators identify potential issues before a cluster upgrade, including checks for control plane health, active alerts, and image registry access (<a href="https://issues.redhat.com/browse/OTA-1560" target="_blank" rel="noopener noreferrer" class="">OTA-1560</a>).</li>
+<li class=""><strong>Flexible Node Storage Configurations:</strong> The Machine Config Operator (MCO) can now ignore non-reconcilable storage configurations, allowing new nodes with different disk layouts to be added to machine pools without causing errors.</li>
+<li class=""><strong>Faster Azure Installs with RHCOS Marketplace Images:</strong> The installer can now use Red Hat CoreOS (RHCOS) images directly from the Azure Marketplace, significantly reducing installation time by avoiding a custom image upload (<a href="https://issues.redhat.com/browse/CORS-3652" target="_blank" rel="noopener noreferrer" class="">CORS-3652</a>).</li>
+<li class=""><strong>Enhanced GCP Installation:</strong> Deployments on GCP Shared VPC (XPN) now support a three-project architecture, allowing DNS to be managed in a separate service project (<a href="https://issues.redhat.com/browse/CORS-4044" target="_blank" rel="noopener noreferrer" class="">CORS-4044</a>). Clusters can also use custom private GCP API endpoints for stricter security (<a href="https://issues.redhat.com/browse/CORS-3916" target="_blank" rel="noopener noreferrer" class="">CORS-3916</a>).</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="vsphere-enhancements">vSphere Enhancements<a href="https://okd.io/blog/2025/09/30/okd-4.20-release-notes#vsphere-enhancements" class="hash-link" aria-label="Direct link to vSphere Enhancements" title="Direct link to vSphere Enhancements" translate="no">​</a></h4>
+<ul>
+<li class=""><strong>Multi-NIC Support (GA):</strong> Support for creating vSphere virtual machines with multiple network interface controllers (NICs) is now <strong>Generally Available</strong> and enabled by default (<a href="https://issues.redhat.com/browse/SPLAT-2045" target="_blank" rel="noopener noreferrer" class="">SPLAT-2045</a>).</li>
+<li class=""><strong>Host Group Mapping:</strong> OpenShift zones can now be mapped to vSphere host groups for improved node distribution.</li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="storage">Storage<a href="https://okd.io/blog/2025/09/30/okd-4.20-release-notes#storage" class="hash-link" aria-label="Direct link to Storage" title="Direct link to Storage" translate="no">​</a></h3>
+<p>Storage performance, security, and driver capabilities have been significantly enhanced in this release.</p>
+<ul>
+<li class=""><strong>Namespace-Level Storage Policies (GA):</strong> The <code>StoragePerformantSecurityPolicy</code> feature is now <strong>Generally Available</strong>. Administrators can define default storage security policies at the namespace level by applying the <code>storage.openshift.io/fsgroup-change-policy</code> and <code>storage.openshift.io/selinux-change-policy</code> labels. This can significantly improve pod startup time for persistent volumes.</li>
+<li class=""><strong>AWS EFS Single-Zone Volume Support:</strong> The AWS EFS CSI driver now supports creating cost-effective, single-availability-zone volumes using the new <code>--single-zone</code> flag.</li>
+<li class=""><strong>Volume Populator Data Source Validation (GA):</strong> The Volume Populators feature is now <strong>Generally Available</strong>. A new <code>volume-data-source-validator</code> controller is installed by default to validate the <code>dataSourceRef</code> field in a PersistentVolumeClaim (PVC), providing immediate feedback on invalid configurations.</li>
+<li class=""><strong>Improved Storage Operator Resiliency:</strong> The <code>PodDisruptionBudget</code> for all storage operators has been updated with <code>unhealthyEvictionPolicy: AlwaysAllow</code> to ensure critical storage pods can be rescheduled during node maintenance or failures.</li>
+<li class=""><strong>Manila CSI Plugin Enhancements (OpenStack):</strong> The Manila CSI plugin now supports configuring multiple share access rules for a single shared file system, allowing multiple clients to mount and access the same share simultaneously (<a href="https://issues.redhat.com/browse/OSPRH-18263" target="_blank" rel="noopener noreferrer" class="">OSPRH-18263</a>).</li>
+<li class=""><strong>CSI Drivers and Sidecars Updated:</strong> Multiple Container Storage Interface (CSI) drivers (AWS EBS, Azure Disk, Azure File, GCP PD, IBM VPC Block) and sidecar components have been updated to their latest upstream versions.</li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="networking">Networking<a href="https://okd.io/blog/2025/09/30/okd-4.20-release-notes#networking" class="hash-link" aria-label="Direct link to Networking" title="Direct link to Networking" translate="no">​</a></h3>
+<p>This release introduces native BGP support, dual-stack networking on AWS, and greater configuration flexibility.</p>
+<ul>
+<li class=""><strong>BGP Integration for User-Defined Networks (UDN):</strong> OVN-Kubernetes now includes native BGP support. This allows the cluster to dynamically advertise pod IP subnets to external provider networks and learn routes from them, simplifying network integration for on-premise UDNs.</li>
+<li class=""><strong>Dual-Stack Networking for OpenShift on AWS:</strong> OpenShift clusters deployed on AWS now support dual-stack (IPv4 and IPv6) networking (<a href="https://issues.redhat.com/browse/CORS-4136" target="_blank" rel="noopener noreferrer" class="">CORS-4136</a>).</li>
+<li class=""><strong>Azure NAT Gateway for Egress Traffic (GA):</strong> Support for using Azure NAT Gateway to manage outbound cluster traffic is now <strong>Generally Available</strong>.</li>
+<li class=""><strong>Post-Deployment Network Configuration:</strong> Disruptive network changes to the <code>br-ex</code> interface can now be applied automatically on node reboot by modifying the NMState configuration file, simplifying advanced network changes (<a href="https://issues.redhat.com/browse/OPNET-594" target="_blank" rel="noopener noreferrer" class="">OPNET-594</a>).</li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="developer-experience-and-console">Developer Experience and Console<a href="https://okd.io/blog/2025/09/30/okd-4.20-release-notes#developer-experience-and-console" class="hash-link" aria-label="Direct link to Developer Experience and Console" title="Direct link to Developer Experience and Console" translate="no">​</a></h3>
+<p>The user experience has been improved with a unified software catalog, enhanced developer tools, and streamlined image management.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="console-and-user-experience">Console and User Experience<a href="https://okd.io/blog/2025/09/30/okd-4.20-release-notes#console-and-user-experience" class="hash-link" aria-label="Direct link to Console and User Experience" title="Direct link to Console and User Experience" translate="no">​</a></h4>
+<ul>
+<li class=""><strong>New Ecosystem Navigation:</strong> A new top-level <strong>Ecosystem</strong> section in the navigation centralizes software management, including a <strong>Unified Catalog</strong> that provides a single place to discover and manage all cluster extensions from OperatorHub.</li>
+<li class=""><strong>Custom Application Icons in Topology:</strong> You can now define a custom icon for your application nodes in the Topology view by adding the <code>app.openshift.io/custom-icon</code> annotation to your workloads (<a href="https://issues.redhat.com/browse/ODC-7803" target="_blank" rel="noopener noreferrer" class="">ODC-7803</a>).</li>
+<li class=""><strong>YAML Editor Improvements:</strong> The YAML editor now features a full-screen mode, a "Copy to clipboard" button, and togglable "sticky scroll" for easier navigation.</li>
+<li class=""><strong>Modernized Web Terminal:</strong> The web terminal has been updated to use standard PatternFly components, providing a more consistent UI and new features like closing tabs with a middle-click (<a href="https://issues.redhat.com/browse/ODC-7802" target="_blank" rel="noopener noreferrer" class="">ODC-7802</a>).</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="image-management">Image Management<a href="https://okd.io/blog/2025/09/30/okd-4.20-release-notes#image-management" class="hash-link" aria-label="Direct link to Image Management" title="Direct link to Image Management" translate="no">​</a></h4>
+<ul>
+<li class=""><strong>ImageStream Multi-Architecture Support:</strong> On multi-architecture clusters, <code>ImageStreams</code> now default to <code>importMode: preserveOriginal</code>, ensuring the complete manifest list is preserved when importing a multi-architecture image (<a href="https://issues.redhat.com/browse/MULTIARCH-4552" target="_blank" rel="noopener noreferrer" class="">MULTIARCH-4552</a>).</li>
+<li class=""><strong>Registry Pre-flight Checks for <code>oc-mirror</code>:</strong> The <code>oc-mirror v2</code> tool now performs "fail-fast" pre-flight checks to validate the connection to the destination registry, preventing long waits on simple configuration errors (<a href="https://issues.redhat.com/browse/CLID-389" target="_blank" rel="noopener noreferrer" class="">CLID-389</a>).</li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="security">Security<a href="https://okd.io/blog/2025/09/30/okd-4.20-release-notes#security" class="hash-link" aria-label="Direct link to Security" title="Direct link to Security" translate="no">​</a></h3>
+<p>Security posture is enhanced with default image signature validation, read-only filesystems, and expanded network policies.</p>
+<ul>
+<li class=""><strong>Default Sigstore Image Validation (GA):</strong> The <code>ClusterImagePolicy</code> and <code>ImagePolicy</code> APIs for sigstore are now <strong>Generally Available</strong>, and the default policy to validate platform images is enabled by default. This strengthens software supply chain security out of the box (<a href="https://issues.redhat.com/browse/OCPNODE-3611" target="_blank" rel="noopener noreferrer" class="">OCPNODE-3611</a>).</li>
+<li class=""><strong>Read-Only Root Filesystems:</strong> To enhance security, several core components now run with a read-only root filesystem by default, including pods for OLM, the integrated registry, CVO, and the <code>openshift-kube-scheduler</code>.</li>
+<li class=""><strong>Network Policies for Core Components:</strong> To reduce the potential attack surface, network policies that restrict traffic have been implemented for numerous components, including storage operators and CSI drivers, OLM, Cloud Credential Operator (CCO), MAPI, and CAPI.</li>
+<li class=""><strong>User Namespaces (GA):</strong> The User Name Space feature, which enhances security by allowing pods to run in isolated user namespaces, is now <strong>Generally Available</strong>.</li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="deprecations-removals-and-feature-graduations">Deprecations, Removals, and Feature Graduations<a href="https://okd.io/blog/2025/09/30/okd-4.20-release-notes#deprecations-removals-and-feature-graduations" class="hash-link" aria-label="Direct link to Deprecations, Removals, and Feature Graduations" title="Direct link to Deprecations, Removals, and Feature Graduations" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="removals-and-deprecations">Removals and Deprecations<a href="https://okd.io/blog/2025/09/30/okd-4.20-release-notes#removals-and-deprecations" class="hash-link" aria-label="Direct link to Removals and Deprecations" title="Direct link to Removals and Deprecations" translate="no">​</a></h4>
+<ul>
+<li class=""><strong>Support for Image Manifest Schema 1 Removed:</strong> To align with modern container standards, support for the deprecated image manifest schema 1 has been completely removed (<a href="https://issues.redhat.com/browse/WRKLDS-1599" target="_blank" rel="noopener noreferrer" class="">WRKLDS-1599</a>).</li>
+<li class=""><strong>Cgroup v1 Support Removed:</strong> Support for cgroup v1 is completely removed. Clusters must be migrated to cgroup v2 before upgrading (<a href="https://issues.redhat.com/browse/OCPNODE-2841" target="_blank" rel="noopener noreferrer" class="">OCPNODE-2841</a>).</li>
+<li class=""><strong>Service Binding Plugin Removed:</strong> The Service Binding feature has been removed from the Developer Console, aligning with the deprecation of the Service Binding Operator (<a href="https://issues.redhat.com/browse/ODC-7722" target="_blank" rel="noopener noreferrer" class="">ODC-7722</a>).</li>
+<li class=""><strong>odo CLI Download Link Removed:</strong> The download link for the deprecated odo CLI tool has been removed from the "Command Line Tools" page (<a href="https://issues.redhat.com/browse/ODC-7790" target="_blank" rel="noopener noreferrer" class="">ODC-7790</a>).</li>
+<li class=""><strong>Legacy GCE Cloud Provider Resources Removed:</strong> Obsolete RBAC resources related to the legacy GCE cloud provider have been removed (<a href="https://issues.redhat.com/browse/WRKLDS-954" target="_blank" rel="noopener noreferrer" class="">WRKLDS-954</a>).</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="feature-graduations-to-general-availability-ga">Feature Graduations to General Availability (GA)<a href="https://okd.io/blog/2025/09/30/okd-4.20-release-notes#feature-graduations-to-general-availability-ga" class="hash-link" aria-label="Direct link to Feature Graduations to General Availability (GA)" title="Direct link to Feature Graduations to General Availability (GA)" translate="no">​</a></h4>
+<p>The following features are now <strong>Generally Available</strong> and enabled by default:</p>
+<ul>
+<li class=""><strong><code>PinnedImageSets</code> and <code>MachineConfigNode</code> APIs:</strong> These MCO features are now GA and their APIs have been promoted to <code>v1</code>.</li>
+<li class=""><strong>ImageVolume:</strong> Allows container images to be used as a volume source for pods (<a href="https://issues.redhat.com/browse/OCPNODE-3121" target="_blank" rel="noopener noreferrer" class="">OCPNODE-3121</a>).</li>
+<li class=""><strong>GCP Labels and Tags:</strong> The ability to configure GCP Labels and Tags via the <code>Infrastructure</code> API is now a standard feature (<a href="https://issues.redhat.com/browse/OAPE-232" target="_blank" rel="noopener noreferrer" class="">OAPE-232</a>).</li>
+<li class=""><strong>vSphere Multi-Disk Support:</strong> Provides stable support for attaching multiple disks in vSphere environments (<a href="https://issues.redhat.com/browse/SPLAT-2346" target="_blank" rel="noopener noreferrer" class="">SPLAT-2346</a>).</li>
+<li class=""><strong>Route Advertisements:</strong> The <code>routeAdvertisements</code> feature for BGP is now GA (<a href="https://issues.redhat.com/browse/CORENET-5704" target="_blank" rel="noopener noreferrer" class="">CORENET-5704</a>).</li>
+<li class=""><strong>Multiple feature gates have been removed</strong> as their features are now stable, including <code>MultiArchInstallAWS</code>, <code>MultiArchInstallGCP</code>, <code>PrivateHostedZoneAWS</code>, <code>CloudDualStackNodeIPs</code>, and <code>VSphereMultiVCenters</code>.</li>
+</ul>]]></content>
+        <author>
+            <name>Prashanth Sundararaman</name>
+            <uri>https://github.com/Prashanth684</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Join Us at Red Hat Summit 2025]]></title>
+        <id>https://okd.io/blog/2025/2025-05-summit</id>
+        <link href="https://okd.io/blog/2025/2025-05-summit"/>
+        <updated>2025-05-19T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Please join us at Red Hat Summit 2025 in Boston for an update on OKD and an opportunity to network with members of our community. More details here...]]></summary>
+        <content type="html"><![CDATA[<p>Please join us at Red Hat Summit 2025 in Boston for an update on OKD and an opportunity to network with members of our community. More details here...</p>
+<p><a href="https://events.experiences.redhat.com/widget/redhat/sum25/SessionCatalog2025/session/1744912463342001NaSw" target="_blank" rel="noopener noreferrer" class="">https://events.experiences.redhat.com/widget/redhat/sum25/SessionCatalog2025/session/1744912463342001NaSw</a></p>]]></content>
+        <author>
+            <name>Jaime Magiera</name>
+            <uri>https://github.com/JaimeMagiera</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[OKD 4.19 Release Notes]]></title>
+        <id>https://okd.io/blog/2025/05/16/okd-4.19-release-notes</id>
+        <link href="https://okd.io/blog/2025/05/16/okd-4.19-release-notes"/>
+        <updated>2025-05-16T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Release Notes: 4.19.0-okd-scos.0]]></summary>
+        <content type="html"><![CDATA[<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="release-notes-4190-okd-scos0">Release Notes: 4.19.0-okd-scos.0<a href="https://okd.io/blog/2025/05/16/okd-4.19-release-notes#release-notes-4190-okd-scos0" class="hash-link" aria-label="Direct link to Release Notes: 4.19.0-okd-scos.0" title="Direct link to Release Notes: 4.19.0-okd-scos.0" translate="no">​</a></h2>
+<p>This release includes updates across various components, introducing new features, managing feature gates, and resolving numerous bugs to enhance stability and functionality. <a href="https://amd64.origin.releases.ci.openshift.org/releasestream/4-scos-stable/release/4.19.0-okd-scos.0" target="_blank" rel="noopener noreferrer" class="">4.19.0-okd-scos.0</a> is the source of this information.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="new-features">New Features<a href="https://okd.io/blog/2025/05/16/okd-4.19-release-notes#new-features" class="hash-link" aria-label="Direct link to New Features" title="Direct link to New Features" translate="no">​</a></h3>
+<p>Several new capabilities and improvements have been introduced in this release:</p>
+<ul>
+<li class="">Support for ServiceAccountTokenNodeBinding has been enabled via a feature gate.</li>
+<li class="">The OLMv1 Single/OwnNamespace feature is now available behind a feature flag.</li>
+<li class="">MachineConfigNodes (MCN) API has been updated to V1 with corresponding CRDs deployed.</li>
+<li class="">The CPMSMachineNamePrefix feature gate has been promoted to the default feature set.</li>
+<li class="">The GatewayAPIController feature gate has been enabled in the Default featureset and its implementation includes Validating Admission Policy for Gateway API CRDs. GRPC conformance tests   have also been added for Gateway API. This feature is NOT supported for OKD because the Openshift service mesh operator, which this feature depends on, is not available as a community operator.</li>
+<li class="">MAPI to CAPI migration has been added as a TechPreview feature.</li>
+<li class="">DualReplica minimum counts have been added, and the feature has been dropped to DevPreview to enable separation of conflicting enum values.</li>
+<li class="">The RouteExternalCertificate feature gate has been promoted to the default feature set with added E2E tests.</li>
+<li class="">A Featuregate for the ConsolePlugin ContentSecurityPolicy API has been lifted.</li>
+<li class="">MetricsCollectionProfiles has reached GA status.</li>
+<li class="">Configuration for external OIDC now supports adding uid and extra claim mappings.</li>
+<li class="">The OnClusterBuild featuregate has been promoted to GA.</li>
+<li class="">Support for SEV_SNP and TDX confidential instance type selection on GCP has been added.</li>
+<li class="">SELinuxMount and SELinuxChangePolicy have been added to DevPreview.</li>
+<li class="">The infrastructure object now includes service endpoints and a feature flag.</li>
+<li class="">An annotation for validated SCC type has been added.</li>
+<li class="">Configuration for vSphere multi disk thinProvisioned has been added.</li>
+<li class="">API Updates for GCP Custom API Endpoints have been added.</li>
+<li class="">The MarketType field has been added to AwsMachineProviderConfig and validation for this field has been added.</li>
+<li class="">UserDefinedNetworks (UDN) has been graduated to GA with associated test improvements.</li>
+<li class="">The ClusterVersionOperator API and manifests have been added, including a controller.</li>
+<li class="">The HighlyAvailableArbiter control plane topology has been added as a feature for techpreview, with support for changing the minimum for arbiter HA deployments.</li>
+<li class="">The KMSEncryptionProvider Feature Gate has been introduced, with support for KMSv2 encryption for ARO HCP using MIv3 and related configuration options.</li>
+<li class="">The additionalRoutingCapabilities gate has been promoted in the ClusterNetworkOperator API.</li>
+<li class="">Support for vSphere host and vm group based zonal has been added.</li>
+<li class="">A MachineNamePrefix field for CPMS has been feature-gated with its feature gate also added.</li>
+<li class="">vSphere multi disk support has been added, including provisioning mode for data disks.</li>
+<li class="">An initial Monitoring CRD api has been added.</li>
+<li class="">The Insights runtime extractor feature has been moved to GA.</li>
+<li class="">A new config option for storing Insights archives to persistent volume has been introduced.</li>
+<li class="">Insight Operator entitlements for multi arch clusters have been enabled.</li>
+<li class="">A liveness probe has been added to the Insights extractor container.</li>
+<li class="">The LokiStack gatherer has been added to Insights.</li>
+<li class="">CNI subdirectory chaining for composable CNI chaining is available.</li>
+<li class="">The nodeslicecontroller has been added to the dockerfile for multus-whereabouts-ipam-cni.</li>
+<li class="">The console has added numerous UI/UX improvements including PatternFly 6 updates, features like deleting IDPs, improved helm form in admin perspective, adding a default storage class action, guided tours in admin perspective, add-card item alignment fixes, conversion of HTML elements to PatternFly components, adding dark theme feedback graphic, adding a Getting started section to the project overview page, adding support for extensibility in SnapshotClass and StorageClass pages, adding a favoriting page in the Admin perspective, exposing Topology components to the dynamic plugin SDK, adding support for a Virtualization Engine subscription filter on OperatorHub, adding dev perspective nav options to the admin perspective, adding conditional CSP headers support, adding a Dynamic Plugins nav item, adding telemetry for OLS Import to Console, and adding a customData field to the HorizontalNav component.</li>
+<li class="">The monitoring-plugin has been updated with PF-6 migration, improved metrics typeahead, label typeahead, plugin proxy for Perses, and the ability to embed Perses Dashboards.</li>
+<li class="">Etcd now has a configurable option for hardware-related timeout delay.</li>
+<li class="">GCP PD CSI Driver includes an Attach Limit for Hyperdisk + Gen4 VMs and has been rebased to upstream v1.17.4.</li>
+<li class="">The GCP PD CSI Driver Operator can enable VolumeAttributesClass and add custom endpoint args from infrastructure.</li>
+<li class="">HyperShift now supports adding a control plane pull secret reference, adding proxy trustedCA to ignition config, testing Azure KMS, capacity reservation in NodePool API, passing featuregates to ocm/oapi, enabling MIv3 for Ingress, configuring KAS goaway-chance, overriding the karpenter image, consuming the KubeAPIServerDNSName API, enabling ppc64le builds, syncing the OpenStack CA cert, limiting CAPI CRD installation on HO, annotating AWSEndpointServices, setting default AWS expirationDate tag, running the kas-bootstrap binary for cpov2, disabling the cluster capabilities flag, enabling MIv3 for Azure file CSI driver, enabling MIv3 for CAPZ, adding e2e tests for image registry capability, adding the konnectivity-proxy sidecar to openshift-oauth-apiserver, checking individual catalog image availability, handling multiple mirror entries, rolling out cpov2 workloads on configmap/secret changes, enabling MIv3 for CNO/CNCC on managed Azure, leveraging ORC to manage the release image on OpenStack, rootless containerized builds, enabling linters, allowing autonode to run upstream karpenter core e2e tests, adding a flag for etcd storage size, auto-approving Karpenter serving CSRs, and providing AWS permission documentation.</li>
+<li class="">Machine API Operator supports updating GCP CredentialsRequest, e2e tests for vSphere multi network and Data Disk features, AMD SEV_SNP and TDX confidential computing machines on GCP, adding image/read permissions, adding vSphere check for max networks, adding Azure permissions.</li>
+<li class="">vSphere Problem Detector supports host groups.</li>
+<li class="">Various tests have been updated or added to support new features and platforms, including OLMv1 preflight permissions checks, MCN V1 API tests, OLMv1 catalogd API endpoint tests, Gateway API tests, testing ratcheting validations, detecting concurrent installer/static pods, platform type external support, and tests for the ImageStreamImportMode feature gate.</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="feature-gates">Feature Gates<a href="https://okd.io/blog/2025/05/16/okd-4.19-release-notes#feature-gates" class="hash-link" aria-label="Direct link to Feature Gates" title="Direct link to Feature Gates" translate="no">​</a></h3>
+<ul>
+<li class="">CPMSMachineNamePrefix has been promoted to the default feature set.</li>
+<li class="">GatewayAPIController has been enabled in the Default featureset. Its implementation includes Validating Admission Policy and is tied to the cluster-ingress-operator. (NOT applicable for OKD)</li>
+<li class="">DualReplica minimum count has been added, separation of conflicting enum values enabled, and the feature dropped to DevPreview.</li>
+<li class="">RouteExternalCertificate has been promoted to the default feature set.</li>
+<li class="">ConsolePlugin ContentSecurityPolicy API feature gate has been lifted.</li>
+<li class="">OnClusterBuild has been promoted to GA.</li>
+<li class="">GatewayAPI has been re-enabled in the Default featureset and promoted to Tech Preview.</li>
+<li class="">VSphereStaticIPs feature gate has been removed.</li>
+<li class="">NewOLMPreflightPermissionCheck feature flag has been added and is watched by the cluster-olm-operator.</li>
+<li class="">VSphereControlPlaneMachineSet feature gate has been removed.</li>
+<li class="">KMS encryption is FeatureGate(d) and the KMSEncryptionProvider Feature Gate has been added.</li>
+<li class="">DualReplica featuregate has been added.</li>
+<li class="">SELinuxMount and SELinuxChangePolicy have been added to DevPreview.</li>
+<li class="">The catalogd metas web api is behind a featuregate.</li>
+<li class="">A Feature Gate AND on NetworkLoadBalancer CEL has been added.</li>
+<li class="">HighlyAvailableArbiter control plane topology is a feature for techpreview.</li>
+<li class="">Persistent Ips feature gate has graduated to GA.</li>
+<li class="">MachineNamePrefix field for CPMS is feature-gated with its feature gate also added.</li>
+<li class="">CSIDriverSharedResource feature gate has been removed.</li>
+<li class="">The ShortCertRotation feature gate has been added and is used to issue short lived certificates in the cluster-kube-apiserver-operator and service-ca-operator.</li>
+<li class="">The UserDefinedNetworks feature gate has graduated to GA.</li>
+<li class="">The additionalRoutingCapabilities gate has been promoted.</li>
+<li class="">The ImageRegistryCapability has been introduced behind a feature gate in HyperShift and tested.</li>
+<li class="">The Dynamic Configuration Manager feature gate has follow-up work to be enabled.</li>
+<li class="">The cluster-olm-operator watches for the APIV1MetasHandler feature gate.</li>
+<li class="">The cluster-olm-operator watches for permissions preflight feature gate.</li>
+<li class="">The service-ca-operator does not check featuregates on the operand.</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="other-feature-gates-enabled-by-default">Other Feature Gates Enabled by Default:<a href="https://okd.io/blog/2025/05/16/okd-4.19-release-notes#other-feature-gates-enabled-by-default" class="hash-link" aria-label="Direct link to Other Feature Gates Enabled by Default:" title="Direct link to Other Feature Gates Enabled by Default:" translate="no">​</a></h3>
+<ul>
+<li class="">ConsolePluginContentSecurityPolicy: Status is Enabled in the Default set. The featuregate was lifted for this API. This gate was added to the console-operator.</li>
+<li class="">OpenShiftPodSecurityAdmission: Status is Enabled in the Default set.</li>
+<li class="">ClusterVersionOperatorConfiguration: Status is Enabled (New) in the Default set.</li>
+<li class="">DyanmicServiceEndpointIBMCloud: Status is Enabled (New) in the Default set.</li>
+<li class="">GCPCustomAPIEndpoints: Status is Enabled (New) in the Default set. There were API updates for GCP Custom API Endpoints.</li>
+<li class="">NewOLMCatalogdAPIV1Metas: Status is Enabled (New) in the Default set. The featuregate for catalogd metas web API was added and is watched for.</li>
+<li class="">NewOLMOwnSingleNamespace: Status is Enabled (New) in the Default set. A feature flag was added for OLMv1 Single/OwnNamespace.</li>
+<li class="">NewOLMPreflightPermissionChecks: Status is Enabled (New) in the Default set. A feature flag for this was added and is watched for.</li>
+<li class="">SigstoreImageVerificationPKI: Status is Enabled (New) in the Default set. A PKI field was added to the image API.</li>
+<li class="">VSphereConfigurableMaxAllowedBlockVolumesPerNode: Status is Enabled (New) in the Default set. The MaxAllowedBlockVolumesPerNode field was added to the VSphereCSIDriverConfigSpec.</li>
+<li class="">VSphereMultiDisk: Status is Enabled (New) in the Default set. Support for vSphere multi disk was added.</li>
+<li class="">ClusterAPIInstallIBMCloud: Status changed from Disabled to Enabled in this set. This feature flag was added to Tech Preview.</li>
+<li class="">MachineAPIMigration: Status changed from Disabled to Enabled in this set. MAPI to CAPI migration was added to TechPreview.</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="bug-fixes">Bug Fixes<a href="https://okd.io/blog/2025/05/16/okd-4.19-release-notes#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes" translate="no">​</a></h3>
+<p>Numerous bugs have been addressed in this release across various components:</p>
+<ul>
+<li class="">Validation for the marketType field in aws-cluster-api-controllers has been added.</li>
+<li class="">Fixed issues using 127.0.0.1 for healtz http-endpoints, corrected ASH driver inject env config, and fixed PodDisruptionBudget name for openstack-manila.</li>
+<li class="">Azure Stack Hub volume detach failure has been fixed.</li>
+<li class="">Panic issues in Azure Stack related to GetZoneByNodeName and when the informer receives cache.DeletedFinalStateUnknown have been fixed.</li>
+<li class="">GovCloud Config has been fixed.</li>
+<li class="">Cross-subscription snapshot deletion is now allowed in azure-file-csi-driver. CVEs related to golang.org/x/crypto and golang.org/x/net have been addressed.</li>
+<li class="">Fixes in the CLI include addressing rpmdiff permissions, using ProxyFromEnvironment for HTTP transport, adjusting the impact summary for Failing=Unknown, populating RESTConfig, bumping glog and golang.org/x/net/crypto dependencies for fixes, ensuring monitor doesn't exit for temp API disconnect, fixing the oc adm node-image create –pxe command, parsing node logs with HTML headers, and obfuscating sensitive data in Proxy resource inspection.</li>
+<li class="">Logo alignment in Webkit has been fixed in cluster-authentication-operator. Duplicate OAuth client creation is avoided. An issue updating the starter path for mom integration has been fixed. Etcd readiness checks are excluded from /readyz.</li>
+<li class="">Broken ControlPlaneMachineSet integration tests have been fixed. A spelling error in the FeatureGate NewOLMCatalogdAPIV1Metas has been fixed. A typo in insightsDataGather has been fixed. A race in tests using CRD patches has been fixed. Handling of validations requiring multiple feature gates has been fixed. Missing CSP directives have been added. StaticPodOperatorStatus validation for downgrades and concurrent node rollouts has been fixed. Insights types duration validation has been fixed. An example format validation has been added. Unused MAPO fields have been deprecated. Reverted Disable ResilientWatchCacheInitialization.</li>
+<li class="">IBM Public Cloud DNS Provider Update Logic has been fixed, along with IBMCloud DNS Propagation Issues in E2E tests. A test is skipped when a specific feature gate is enabled. Single Watch on GWAPI CRD issue has been fixed.</li>
+<li class="">Dev cert rotation has been reverted in cluster-kube-apiserver-operator. Etcd endpoints are now checked by targetconfigcontroller. Metrics burn rate calculations and selectors have been adjusted or fixed. Skipping cert generation when networkConfig.status.ServiceNetwork is nil has been fixed. Reverted Disable ResilientWatchCacheInitialization.</li>
+<li class="">The gracefully shutdown of the KSVM pod has been fixed.</li>
+<li class="">Error handling on port collision in CVO has been improved. A few tests failing on Non-AMD64 machines have been fixed. Unknown USC insights are dropped after a grace period. The preconditions code has been simplified.</li>
+<li class="">Numerous console UI/UX and functional bugs have been fixed, including list header wrapping, http context/client handling, quick create button data-quickstart-id, critical alerts section collapsing, runtime errors on MachineConfigPools, switch animation regressions, ACM hiding switcher, favorites button name, listpageheader rendering, tab underline missing, notification drawer spacing, withHandlePromise HOC deprecation, quick start action spacing, operator appearing twice, breadcrumb spacing, web terminal initialize form style, quickstart highlighting, base CSS removal/conversion, VirtualizedTable and ListPageFilter deprecation, OLM CSV empty state link, helpText usage, add card item alignment, ErrorBoundary modal link, DualReplica validation hack, fetching taskRuns by UID, catalog view cleanup, PF6 bug fixes, deployment editing from private git, co-resource-icon clipping, notification drawer keyboard navigation, flaking update-modal tests, orphaned CSS class removal, PDB example YAML missing field, Error state component groups, Developer Catalog renaming, Favorites e2e tests, secret form base64 decoding, typo on tour page, helm chart repository name, SnapshotClass/StorageClass extensibility, plugin type-only warnings, react-helmet/react-measure migration, pipeline ci tests disabling, plugin-api-changed label, getting started alert, perspective merge tests, react-modal/react-tagsinput updates, init containers readiness count, notification drawer overlap, static plugin barrel file references, CaptureTelemetry hooks, flaky Loading tests, admin perspective guided tour disabling, Access review table sort, types/react update, getting started resources content, Node Logs toolbar layout, Loading replacement, favorites icon hover effect, LogViewer theme setting, namespace persistence on perspective switch, secret form drag and drop, logoutOpenShift call removal, NodeLogs Selects closing, missing patternfly styles, monaco theming/sidebar logic, Banner replacement, ODC Project details breadcrumbs, resource list page name filter alignment, VolumeSnapshots not displayed, ResourceLog checkbox replacement, ts-ignore removal, Checkbox filter replacement, monitoring topic update, original path retention on perspective detection, monaco/YAML language server update, subscription values display, Jobs createdTime, CLI links sorting, bottom notifications alignment, notification drawer close button error, Timestamp component, unused static plugin modules, edit resource limit margins, CSRs not loading without permissions, async package upgrade, bold text/link underline issues, dropdown menu overflow, contextId for plugin tabs, OLM operator uninstall message linkify, Observe section display, textarea horizontal expansion, Topology sidebar alert storage, Demo Plugin tab URL, Command Line Terminal tab background color, basic authentication secret type, runtime errors for completed version, QueryBrowser tooltip styles, edit upstream config layout, deployment pod update on imageStream change, Bootstrap radio/checkbox alignment, QuickStart layout, guided tour popover overlap, Edit button bolding, cypress config update, bridge flag for CSP features, CSV details plugin name, Pipeline Repository overview page close button, Topology component exposure, catalog card label alignment, YAMLs directory case sensitivity, Search filter dropdown label i18n, broken codeRefs, CSP headers refresh popover, dev-console cypress test update, plugin name parsing variable, dependency assets copying, ns dropdown UI with web terminal, SourceSecretForm/BasicAuthSubform tech debt, create a Project button, GQL query payload size, non-General User Preference navigation, openshift Authenticate func user token, catalog operator installation parameters, telemetry events OpenShift release version preference, web terminal test failures, errors appending via string, external link icons, BuildSpec details heading font size, capitalization fix for Lightspeed, i18n upload/download, Font Awesome icon alignment, Serverless function test no response, Post TypeScript upgrade changes, helm CI failures, TypeScript upgrade, GQL introspection disabling, code removal, axe-core/cypress-axe upgrade, search tool error, PopupKebabMenu/ClusterConfigurationDropdownField removal, operator installation with + in version name, missing PDB violated translation, Number input focus layout, AlertsRulesDetailPage usage, guessModuleFilePath warnings, channel/version dropdown collapse, webpack 5 upgrade, check-resolution parallel run, Init:0/1 pod status, window.windowErrors saving, ConsolePlugins list display, backend service details runtime error, Function Import error, default StorageClass for ServerlessFunction pipelineVolumeClaimTemplate, Save button enablement in Console plugin enablement, ImagePullSecret duplication, Shipwright build empty params filtering.</li>
+<li class="">The managed-by-label populated with an invalid value has been fixed in external-provisioner. CVEs related to golang.org/x/net/crypto have been addressed.</li>
+<li class="">Etcd ensure cluster id changes during force-new-cluster, and a compaction induce latency issue has been fixed.</li>
+<li class="">Volume unpublish and attachment through reboots has been ensured for kubevirt-csi-driver.</li>
+<li class="">A temporary pin on the FRR version has been applied in metallb-frr to a known working rpm.</li>
+<li class="">Monitoring plugin fixes include updates to avoid overriding console routes, table scroll/column alignment, performance improvements for incidents page, resetting orthogonal selections, not breaking if cluster doesn’t exist, filtering by cluster name, showing column headings, fixing states filter in aggregated row, clearing old queries, fixing silence alerts data form, re-adding CSV button, allowing refresh interval to be off, removing deleted image dependency, Export as CSV, not showing metrics links in acm perspective, updating datasource on csrf token changes, adding mui/material dependency, fixing typo in predefined metrics, fixing virtualization perses extension point, filter dropdowns, alerts timestamps cutoff, incidents page filters, incidents page loading state, net/http vulnerability, tooltip in row details, fixing incidents filter issues with severities and long standing, incidents dark theme, syncing alert chart to main filter, hotfix for filter requirements, alerting refactor, virtualization perspective routes, potentially undefined variable access, incident chart colors, incidents filter logic/sync, syncing alerts chart/incidents table with days filter, sorting chart bars, reverting reset all filters button, fixing gap in incident charts, using pf v5 variables/table, fixing dev perspective alert URL namespace, incidents page date style, hideshow graph button update, incidents page reset filters, fixing admin console alert detail graph, fixing button spacing on silence form, fixing bounds on bar chart, fixing inverted dropdown toggle, allowing editing of the until field on the silence edit page, fixing feature flagged DX, fixing expanded row rendering, upgrading incidents dropdown, updating incidents charts cursor, removing extra copy.</li>
+<li class="">Issues writing network status annotation on CNI ADD have been tolerated in multus-cni. Empty CNI result is properly structured. Getpodcontext cache miss has been fixed.</li>
+<li class="">Entrypoint issues have been fixed for multus-whereabouts-ipam-cni, including for new SCOS builds.</li>
+<li class="">An error event has been added for failed ingress to route conversion in route-controller-manager.</li>
+<li class="">Drop nil metrics during elide transform and capture metric for same has been fixed in telemeter, along with checking nil metric in elide label.</li>
+<li class="">Numerous test fixes have been implemented, including increasing timeouts, bumping limits, skipping tests, fixing node selection in MCN tests, fixing MCN tests for two-node clusters, preventing tests using unschedulable nodes, fixing default cert issuer name in RouteExternalCertificate tests, ensuring Git Clone does not run privileged, fixing failed arbiter tests, removing skipped annotation for metal ipv6, adding limit exceptions for Istio, adding cleanup to MCN test, removing CRD schema check, fixing broken intervals charts, fixing egress firewall tests URLs, fixing CBOR data decoding in etcd tests, fixing IPsec tests, validating binary extraction, failing test when operator degrades, using payload pullspec for image info, using non-fake boot image, relying on unstructured for update status, checking load balancer healthcheck port/path, allowing overriding extension binary, re-enabling AWS for router HTTP/2 test, displaying etcd bootstrap event, fixing network name change compatibility, increasing timeouts for live migration, addressing malformed configmap post-test, increasing UDN probe timeouts, adding exceptions outside upgraded window, adding Readiness Probe to Router Status Tests, adding error check for failed cleanup, fixing live migration tests detecting dualstack, extending kubeconfig tests, fixing IPv6 handling in router tests, fixing live migration tests, UDN tests waiting for SCC annotation, fixing auditLogAnalyzer flake error, fixing nmstate deployment failures, showing resources updated too often in auditloganalyzer, skipping OperatorHubSourceError metric checking, adding test case for checking EgressFirewall DNS names, fixing network segmentation eventual consistency, increasing KAPI server timeout, using max time for netpol pods curl requests, moving initialization of OC.</li>
+<li class="">Datastore check messages have been improved in vsphere-problem-detector.</li>
+</ul>]]></content>
+        <author>
+            <name>Prashanth Sundararaman</name>
+            <uri>https://github.com/Prashanth684</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[OKD 4.19 stable and 4.20 ec have released]]></title>
+        <id>https://okd.io/blog/2025/05/14/okd-4.19-and-4.20-release</id>
+        <link href="https://okd.io/blog/2025/05/14/okd-4.19-and-4.20-release"/>
+        <updated>2025-05-14T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[We’re excited to announce that OKD 4.19.0-scos.0 has been officially promoted to the stable release channel!]]></summary>
+        <content type="html"><![CDATA[<p>We’re excited to announce that OKD 4.19.0-scos.0 has been officially promoted to the stable release channel!</p>
+<p>You can view the release payload here: <a href="https://amd64.origin.releases.ci.openshift.org/releasestream/4-scos-stable/release/4.19.0-okd-scos.0" target="_blank" rel="noopener noreferrer" class="">4.19.0-okd-scos.0</a>
+and compare the differences with the last stable 4.18 release.</p>
+<p>A few significant highlights of this release include:</p>
+<ul>
+<li class="">Bootimages and node images are now based on Centos stream CoreOS (scos)</li>
+<li class="">Bootimages are available publicly at: <a href="https://cloud.centos.org/centos/scos/9/prod/streams/" target="_blank" rel="noopener noreferrer" class="">https://cloud.centos.org/centos/scos/9/prod/streams/</a></li>
+<li class="">Baremetal installs, assisted and agent based installs work seamlessly now that bootimages have been transitioned to scos</li>
+<li class="">Upgrade edges have been added from previous stable release to the new release</li>
+</ul>
+<p>Alongside this stable release, we’re also publishing a development preview of the next version: <a href="https://amd64.origin.releases.ci.openshift.org/releasestream/4-scos-next/release/4.20.0-okd-scos.ec.0" target="_blank" rel="noopener noreferrer" class="">4.20.0-okd-scos.ec.0</a> – now available on the 4-scos-next channel for early testing and feedback.</p>
+<p>We encourage users and contributors to test the new releases and share feedback via the OKD community channels.
+Stay tuned for more updates!</p>]]></content>
+        <author>
+            <name>Prashanth Sundararaman</name>
+            <uri>https://github.com/Prashanth684</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Say Hello @ KubeCon EU 2025]]></title>
+        <id>https://okd.io/blog/2025/03/25/okd-at-kubecon-eu</id>
+        <link href="https://okd.io/blog/2025/03/25/okd-at-kubecon-eu"/>
+        <updated>2025-03-25T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Members of the OKD Working Group are attending KubeCon EU!]]></summary>
+        <content type="html"><![CDATA[<p>Members of the OKD Working Group are attending KubeCon EU!</p>
+<p>We are looking forward to meeting existing and future users of OKD and talk to other members of the ecosystem about OKD.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="okd-meetup">OKD Meetup<a href="https://okd.io/blog/2025/03/25/okd-at-kubecon-eu#okd-meetup" class="hash-link" aria-label="Direct link to OKD Meetup" title="Direct link to OKD Meetup" translate="no">​</a></h3>
+<ul>
+<li class=""><strong>When</strong>: 3:30pm - 4:30pm - Tuesday, April 1st 2025</li>
+<li class=""><strong>Where</strong>: <a href="https://www.cpdocklands.co.uk/" target="_blank" rel="noopener noreferrer" class="">Crowne Plaza London Docklands</a></li>
+<li class=""><strong>What</strong>: No set agenda, just a room to talk all things OKD and meet fellow community members!</li>
+<li class=""><strong>Who</strong>: No preregistration required! Users and Contributors of OKD are encourage to attend</li>
+</ul>
+<p>This follows immediately after RedHat OpenShift Commons which you can find out more about <a href="https://commons.openshift.org/gatherings/kubecon-25-apr-01/" target="_blank" rel="noopener noreferrer" class="">here</a>. You do not need to attend RedHat OpenShift Commons to join the OKD Meetup</p>
+<p>Hotel Address:
+Crowne Plaza London Docklands, Royal Victoria Dock, Western Gateway, London, E16 1AL, United Kingdom</p>]]></content>
+        <author>
+            <name>Zed Spencer-Milnes</name>
+            <uri>https://github.com/GingerGeek</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[OKD 4.17 and 4.16 releases]]></title>
+        <id>https://okd.io/blog/2024/12/16/okd-4-16-and-4-17-release</id>
+        <link href="https://okd.io/blog/2024/12/16/okd-4-16-and-4-17-release"/>
+        <updated>2024-12-16T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[We are pleased to announce the release of OKD 4.17, alongside OKD 4.16 to allow upgrades for existing 4.15 clusters.]]></summary>
+        <content type="html"><![CDATA[<p>We are pleased to announce the release of OKD 4.17, alongside OKD 4.16 to allow upgrades for existing 4.15 clusters.</p>
+<div class="theme-admonition theme-admonition-warning admonition_xJq3 alert alert--warning"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg></span>warning</div><div class="admonitionContent_BuS1"><p>4.16 is intended only as a pass-through for existing 4.15 clusters. Upgrading existing 4.15 cluster will require manual interventions and special care due to major changes in how OKD is built and assembled which have introduced various side effects.</p></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="youre-late-why">You're late, why?<a href="https://okd.io/blog/2024/12/16/okd-4-16-and-4-17-release#youre-late-why" class="hash-link" aria-label="Direct link to You're late, why?" title="Direct link to You're late, why?" translate="no">​</a></h2>
+<p>Yes, we are. OKD builds became polluted with RHEL content that was included in "payload components" (e.g cluster-infrastructure operators, images, etc that made up OKD). This was highlighted in Summer 2023 and heading into 2024 all OKD releases were stopped until this issue was addressed.</p>
+<p>After significant work from a few engineers at RedHat, all components that make up OKD should now be free from RHEL artifacts. This required significant work to build infrastructure and process and chasing issues related to discrepancies between CentOS and RHEL. Most OKD components are now based off CentOS Stream as the base image layer (the license-free upstream to RHEL).</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="i-want-to-install-a-new-cluster">I want to install a new cluster<a href="https://okd.io/blog/2024/12/16/okd-4-16-and-4-17-release#i-want-to-install-a-new-cluster" class="hash-link" aria-label="Direct link to I want to install a new cluster" title="Direct link to I want to install a new cluster" translate="no">​</a></h2>
+<p>New cluster installations can follow the normal process. Downloads of client tools with the latest versions of OKD 4.17 embedded can be found <a href="https://github.com/okd-project/okd/releases/tag/4.17.0-okd-scos.0" target="_blank" rel="noopener noreferrer" class="">here</a>.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="i-want-to-upgrade-an-existing-cluster">I want to upgrade an existing cluster<a href="https://okd.io/blog/2024/12/16/okd-4-16-and-4-17-release#i-want-to-upgrade-an-existing-cluster" class="hash-link" aria-label="Direct link to I want to upgrade an existing cluster" title="Direct link to I want to upgrade an existing cluster" translate="no">​</a></h2>
+<p>We recommended attempting upgrades from the latest released version of OKD FCOS 4.15 (<code>4.15.0-0.okd-2024-03-10-010116</code>).</p>
+<p>Upgrading existing 4.15 cluster will require manual interventions and special care due to major changes in how OKD is built and assembled which have introduced various side effects.</p>
+<p>There is a new area for upgrade notes covering the 4.15 through 4.17</p>
+<div class="theme-admonition theme-admonition-info admonition_xJq3 alert alert--info"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>info</div><div class="admonitionContent_BuS1"><p><a class="" href="https://okd.io/docs/project/upgrade-notes/from-4-15/">OKD Upgrade Notes: From 4.15</a></p></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="node-operating-systems-are-now-based-off-centos-stream-coreos-scos">Node operating systems are now based off CentOS Stream CoreOS (SCOS)<a href="https://okd.io/blog/2024/12/16/okd-4-16-and-4-17-release#node-operating-systems-are-now-based-off-centos-stream-coreos-scos" class="hash-link" aria-label="Direct link to Node operating systems are now based off CentOS Stream CoreOS (SCOS)" title="Direct link to Node operating systems are now based off CentOS Stream CoreOS (SCOS)" translate="no">​</a></h2>
+<p>As part of this work we have also changed the node operating system to be based off CentOS Stream CoreOS (SCOS) rather than Fedora CoreOS (FCOS). It's worth noting that this work was not part of the OKD Streams (where we produced concurrent releases for FCOS and SCOS) project which for now has been suspended.</p>
+<p>The build process for SCOS and it's assembly into OKD in versions greater than 4.16 is vastly different to how it happened as part of OKD Streams in version 4.15 and below.</p>
+<div class="theme-admonition theme-admonition-warning admonition_xJq3 alert alert--warning"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg></span>warning</div><div class="admonitionContent_BuS1"><p>There are known issues and regressions related to the move from FCOS to SCOS that may effect new and existing clusters. Please refer to <a class="" href="https://okd.io/docs/project/upgrade-notes/from-4-15/">OKD Upgrade Notes: From 4.15</a></p></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="special-thanks">Special thanks<a href="https://okd.io/blog/2024/12/16/okd-4-16-and-4-17-release#special-thanks" class="hash-link" aria-label="Direct link to Special thanks" title="Direct link to Special thanks" translate="no">​</a></h2>
+<p>The OKD Working Group would like to thank <a href="https://github.com/Prashanth684" target="_blank" rel="noopener noreferrer" class="">Prashanth Sundararaman</a> of RedHat for their work</p>]]></content>
+        <author>
+            <name>Zed Spencer-Milnes</name>
+            <uri>https://github.com/GingerGeek</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[OKD Pre-Release Testing July 2024]]></title>
+        <id>https://okd.io/blog/2024/07/30/okd-pre-release-testing</id>
+        <link href="https://okd.io/blog/2024/07/30/okd-pre-release-testing"/>
+        <updated>2024-07-30T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Last month, we announced the transition of all development efforts to OKD on SCOS as part of a plan to ensure OKD's longevity. As of a few weeks ago, nightly builds of OKD SCOS have begun to appear on the OpenShift CI system. We're encouraging the community to test these nightlies in non-production environments. Please note that these nightly pre-release builds are not guaranteed an upgrade path to final releases. These are only for testing purposes.]]></summary>
+        <content type="html"><![CDATA[<p>Last month, <a href="https://okd.io/blog/2024/06/01/okd-future-statement" target="_blank" rel="noopener noreferrer" class="">we announced the transition of all development efforts to OKD on SCOS</a> as part of a plan to ensure OKD's longevity. As of a few weeks ago, nightly builds of OKD SCOS have begun to appear on the <a href="https://amd64.origin.releases.ci.openshift.org/" target="_blank" rel="noopener noreferrer" class="">OpenShift CI system</a>. We're encouraging the community to test these nightlies in non-production environments. <strong>Please note that these nightly pre-release builds are not guaranteed an upgrade path to final releases. These are only for testing purposes.</strong></p>
+<p>Additionally, please note that the OKD SCOS nightly builds from January-April 2024 should not be installed. These were just tests of the CI/CD process itself. Only the builds from July 2024 onward should be installed and tested.</p>
+<p>You can find more information about our testing needs and how to report your results on the <a href="https://github.com/okd-project/okd/blob/master/COMMUNITY-TESTING.md" target="_blank" rel="noopener noreferrer" class="">Community Testing page</a>.</p>
+<p>Please reach out to us with any questions.</p>
+<p>Many thanks,</p>
+<p>The OKD Working Group Co-Chairs</p>]]></content>
+        <author>
+            <name>Jaime Magiera</name>
+            <uri>https://github.com/JaimeMagiera</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[OKD Working Group Statement]]></title>
+        <id>https://okd.io/blog/2024/06/01/okd-future-statement</id>
+        <link href="https://okd.io/blog/2024/06/01/okd-future-statement"/>
+        <updated>2024-06-01T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[We would like to take a moment to outline what's been happening the past few months in terms of OKD releases and what the future holds for the project.]]></summary>
+        <content type="html"><![CDATA[<p>We would like to take a moment to outline what's been happening the past few months in terms of OKD releases and what the future holds for the project.</p>
+<p>In Summer of 2023, it came to the attention of Red Hat that licensed content was inadvertently being included in the OKD releases. This necessitates a change of the OKD release materials. At the same time, the Working Group has been striving to increase the community's direct involvement in the build and release process. To address these concerns, Red Hat and the Working Group have been collaborating on defining a path forward over the past few months. This work involves moving OKD builds to a new system, changing the underlying OS, and exposing the new build and release process to community members.</p>
+<p>After careful consideration, we've settled on using Centos Stream CoreOS (SCOS) as the underlying operating system for the new builds. We've been working with SCOS since it was first announced at KubeCon U.S. 2022. There's a great opportunity with SCOS for the larger Open Source community to participate in improving OKD and further delineating it from other Kubernetes distributions. The builds will be for x86_64 only while we get our bearings. Given rpm-ostree is the foundation of all modern OKD releases, many existing installations will be able to switch to the SCOS distribution in-place. We're working to outline that procedure in our documentation and identify any edge-cases that may require more work to transition.</p>
+<p>The payload for OKD on SCOS is now successfully building. There are still end-to-end tests which need to complete successfully and other housekeeping tasks before pre-release nightly builds can spin up an active cluster. We anticipate this happening within the next few weeks. At that point, members of the community will be able to download these nightly builds for testing and exploration purposes.</p>
+<p>On the community involvement and engagement side of things, we'll be relaunching our website to align with the first official release of OKD on SCOS. That site will feature much clearer paths to the information users want to get their clusters up and running. We're redoubling our efforts to help homelabs, single-node, and other similar use cases get off the ground. Likewise, the new website will provide much clearer information on how community members can contribute to the project.</p>
+<p>We appreciate everyone's patience over the past few months while we solidified the path forward. We wanted to be confident the pieces would fit together and bring about the desired results before releasing an official statement. From here on out, there will be regular updates on our website.</p>
+<p>We understand that there will be lots of questions as this process moves forward. Please post those questions on <a href="https://github.com/okd-project/okd/discussions/1922" target="_blank" rel="noopener noreferrer" class="">this discussion thread</a>. We will organize them into this <a href="https://okd.io/scos-migration-faq/" target="_blank" rel="noopener noreferrer" class="">Frequently Asked Questions page</a>.</p>
+<p>Many thanks,</p>
+<p>The OKD Working Group Co-Chairs</p>]]></content>
+        <author>
+            <name>Jaime Magiera</name>
+            <uri>https://github.com/JaimeMagiera</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[State of affairs in OKD CI/CD]]></title>
+        <id>https://okd.io/blog/2023/07/18/state-of-Affairs-in-OKD-CI-CD</id>
+        <link href="https://okd.io/blog/2023/07/18/state-of-Affairs-in-OKD-CI-CD"/>
+        <updated>2023-07-18T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[OKD is a community distribution of Kubernetes which is built from Red Hat OpenShift components on]]></summary>
+        <content type="html"><![CDATA[<p><a href="https://www.okd.io/" target="_blank" rel="noopener noreferrer" class="">OKD</a> is a community distribution of Kubernetes which is built from Red Hat OpenShift components on
+top of Fedora CoreOS (FCOS) and recently also CentOS Stream CoreOS (SCOS). The OKD variant based on Fedora CoreOS is
+called <a href="https://github.com/okd-project/okd" target="_blank" rel="noopener noreferrer" class="">OKD or OKD/FCOS</a>. The SCOS variant is often referred to as <a href="https://github.com/okd-project/okd-scos/" target="_blank" rel="noopener noreferrer" class="">OKD/SCOS</a>.</p>
+<p>The previous blog posts introduced <a class="" href="https://okd.io/blog/2022/10/24/OKD-Streams-Building-the-Next-Generation-of-OKD-together">OKD Streams</a>
+and <a class="" href="https://okd.io/blog/2022/12/12/building-OKD-payload">its new Tekton pipelines</a> for building OKD/FCOS and OKD/SCOS releases. This
+blog post gives an overview of the current build and release processes for FCOS, SCOS and OKD. It outlines OKD's
+dependency on OpenShift, an remnant from the past when its Origin predecessor was a downstream rebuild of OpenShift 3,
+and concludes with an outlook on how OKD Streams will help users, developers and partners to experiment with future
+OpenShift.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="fedora-coreos-and-centos-stream-coreos">Fedora CoreOS and CentOS Stream CoreOS<a href="https://okd.io/blog/2023/07/18/state-of-Affairs-in-OKD-CI-CD#fedora-coreos-and-centos-stream-coreos" class="hash-link" aria-label="Direct link to Fedora CoreOS and CentOS Stream CoreOS" title="Direct link to Fedora CoreOS and CentOS Stream CoreOS" translate="no">​</a></h2>
+<p><a href="https://github.com/coreos/fedora-coreos-pipeline" target="_blank" rel="noopener noreferrer" class="">Fedora CoreOS is built with a Jenkins pipeline running in Fedora's infrastructure</a> and is being maintained by the Fedora CoreOS team.</p>
+<p>CentOS Stream CoreOS is built with a <a href="https://github.com/okd-project/okd-coreos-pipeline/" target="_blank" rel="noopener noreferrer" class="">Tekton pipeline</a> running in a
+OpenShift cluster on <a href="https://massopen.cloud/" target="_blank" rel="noopener noreferrer" class="">MOC</a>'s infrastructure and pushed to <code>quay.io/okd/centos-stream-coreos-9</code>.
+The SCOS build pipeline is owned and maintained by the OpenShift OKD Streams team and <a href="https://github.com/openshift/release/blob/master/clusters/app.ci/supplemental-ci-images/okd/scos.yaml" target="_blank" rel="noopener noreferrer" class="">SCOS builds are being imported
+from <code>quay.io</code> into OpenShift CI as <code>ImageStream</code>s</a>.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="openshift-payload-components">OpenShift payload components<a href="https://okd.io/blog/2023/07/18/state-of-Affairs-in-OKD-CI-CD#openshift-payload-components" class="hash-link" aria-label="Direct link to OpenShift payload components" title="Direct link to OpenShift payload components" translate="no">​</a></h2>
+<p>At the time of writing, most payload components for OKD/FCOS and OKD/SCOS get mirrored from OCP CI releases. OpenShift
+CI (<a href="https://docs.prow.k8s.io/" target="_blank" rel="noopener noreferrer" class="">Prow</a> and <a href="https://docs.ci.openshift.org/docs/architecture/ci-operator/" target="_blank" rel="noopener noreferrer" class="">ci-operator</a>)
+periodically builds OCP images, e.g. for <a href="https://github.com/openshift/release/blob/master/ci-operator/config/openshift/ovn-kubernetes/" target="_blank" rel="noopener noreferrer" class="">OVN-Kubernetes</a>.
+<a href="https://github.com/openshift/release/tree/master/core-services/release-controller" target="_blank" rel="noopener noreferrer" class="">OpenShift's <code>release-controller</code></a>
+detects changes to image streams, caused by recently built images, then builds and tests a OCP release image. When such
+an release image passes all non-optional tests (also see <a href="https://docs.ci.openshift.org/docs/architecture/release-gating/" target="_blank" rel="noopener noreferrer" class="">release gating</a> docs), the release image and other payload components
+are mirrored to <code>origin</code> namespaces on <code>quay.io</code> (release gating is subject to <a href="https://issues.redhat.com/browse/DPTP-3565" target="_blank" rel="noopener noreferrer" class="">change</a>). <a href="https://github.com/openshift/release/blob/master/core-services/release-controller/_releases/release-ocp-4.14-ci.json" target="_blank" rel="noopener noreferrer" class="">For example, at most every 3 hours a OCP 4.14 release image</a>
+will be deployed (and upgraded) on AWS and GCP and afterwards tested with <a href="https://github.com/openshift/origin" target="_blank" rel="noopener noreferrer" class="">OpenShift's conformance test suite</a>. <a href="https://github.com/openshift/release/blob/master/core-services/release-controller/_releases/release-ocp-4.14-ci.json" target="_blank" rel="noopener noreferrer" class="">When it passes the non-optional tests the release image and its dependencies will
+be mirrored to <code>quay.io/origin</code> (except for <code>rhel-coreos*</code>, <code>*-installer</code> and some other images)</a>.
+These OCP CI releases are listed with a <code>ci</code> tag at <a href="https://amd64.ocp.releases.ci.openshift.org/" target="_blank" rel="noopener noreferrer" class="">amd64.ocp.releases.ci.openshift.org</a>. Builds and promotions of <code>nightly</code> and <code>stable</code> OCP releases are handled
+differently (i.e. outside of Prow) by the <a href="https://source.redhat.com/groups/public/openshift/openshift_wiki/openshift_automated_release_tooling_art_team_faqs" target="_blank" rel="noopener noreferrer" class="">Automated Release Tooling (ART)</a>
+team.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="okd-payload-components">OKD payload components<a href="https://okd.io/blog/2023/07/18/state-of-Affairs-in-OKD-CI-CD#okd-payload-components" class="hash-link" aria-label="Direct link to OKD payload components" title="Direct link to OKD payload components" translate="no">​</a></h2>
+<p>A few payload components are built specifically for OKD though, for example OKD/FCOS' <a href="https://github.com/openshift/okd-machine-os" target="_blank" rel="noopener noreferrer" class="">okd-machine-os</a>. Unlike RHCOS and SCOS, <a href="https://github.com/openshift/okd-machine-os" target="_blank" rel="noopener noreferrer" class="">okd-machine-os</a>, the operating system running on OKD/FCOS nodes,
+<a href="https://github.com/openshift/okd-machine-os/blob/master/Dockerfile" target="_blank" rel="noopener noreferrer" class="">is layered on top of FCOS</a> (also
+see <a href="https://github.com/coreos/enhancements/blob/main/os/coreos-layering.md" target="_blank" rel="noopener noreferrer" class="">CoreOS Layering</a>,
+<a href="https://github.com/openshift/enhancements/blob/master/enhancements/ocp-coreos-layering/ocp-coreos-layering.md" target="_blank" rel="noopener noreferrer" class="">OpenShift Layered CoreOS</a>).</p>
+<p>Note, some payload components have OKD specific configuration in OpenShift CI although the resulting images are not
+incorporated into OKD release images. For example, <a href="https://github.com/openshift/release/commit/4df7ed1775ee8a65ec5ca435ab356cfb599793cc" target="_blank" rel="noopener noreferrer" class="">OVN-Kubernetes images are built and tested in OpenShift CI to
+ensure OVN changes do not break OKD</a>.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="okd-releases">OKD releases<a href="https://okd.io/blog/2023/07/18/state-of-Affairs-in-OKD-CI-CD#okd-releases" class="hash-link" aria-label="Direct link to OKD releases" title="Direct link to OKD releases" translate="no">​</a></h2>
+<p>When OpenShift's <code>release-controller</code> detects changes to OKD related image streams, either due to updates of FCOS/SCOS,
+an OKD payload component or due to OCP payload components being mirrored after an OCP CI release promotion, it builds
+and tests a new OKD release image. When such an OKD release image passes all non-optional tests, the image is tagged as
+<code>registry.ci.openshift.org/origin/release:4.14</code> etc. This CI release process is similar for OKD/FCOS and OKD/SCOS, e.g.
+compare these examples for <a href="https://github.com/openshift/release/blob/master/core-services/release-controller/_releases/release-okd-4.14.json" target="_blank" rel="noopener noreferrer" class="">OKD/FCOS 4.14</a> and
+with <a href="https://github.com/openshift/release/blob/master/core-services/release-controller/_releases/release-okd-scos-4.14.json" target="_blank" rel="noopener noreferrer" class="">OKD/SCOS 4.14</a>.
+OKD/FCOS's and OKD/SCOS's CI releases are listed at <a href="https://amd64.origin.releases.ci.openshift.org/" target="_blank" rel="noopener noreferrer" class="">amd64.origin.releases.ci.openshift.org</a>.</p>
+<p>Promotions for OKD/FCOS to <code>quay.io/openshift/okd</code> (published at <a href="https://github.com/okd-project/okd/releases/" target="_blank" rel="noopener noreferrer" class="">github.com/okd-project/okd</a>) and for OKD/SCOS to <code>quay.io/okd/scos-release</code> (published at
+<a href="https://github.com/okd-project/okd-scos/releases/" target="_blank" rel="noopener noreferrer" class="">github.com/okd-project/okd-scos</a>) are done roughly every 2 to 3
+weeks. For OKD/SCOS, <a href="https://github.com/okd-project/okd-release-pipeline" target="_blank" rel="noopener noreferrer" class="">OKD's release pipeline</a> is triggered manually
+once a sprint to promote CI releases to <a href="https://amd64.origin.releases.ci.openshift.org/" target="_blank" rel="noopener noreferrer" class=""><code>4-scos-{next,stable}</code></a>.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="okd-streams-and-customizable-tekton-pipelines">OKD Streams and customizable Tekton pipelines<a href="https://okd.io/blog/2023/07/18/state-of-Affairs-in-OKD-CI-CD#okd-streams-and-customizable-tekton-pipelines" class="hash-link" aria-label="Direct link to OKD Streams and customizable Tekton pipelines" title="Direct link to OKD Streams and customizable Tekton pipelines" translate="no">​</a></h2>
+<p>However, the OKD project is currently shifting its focus from doing downstream rebuilds of OCP to <a href="https://www.okd.io/blog/2022-10-25-OKD-Streams-Building-the-Next-Generation-of-OKD-together/" target="_blank" rel="noopener noreferrer" class="">OKD Streams</a>. As part of this strategic
+repositioning, OKD offers <a href="https://argo-cd.readthedocs.io/en/stable/" target="_blank" rel="noopener noreferrer" class="">Argo CD</a> workflows and <a href="https://tekton.dev/" target="_blank" rel="noopener noreferrer" class="">Tekton</a> pipelines to build CentOS Stream CoreOS (SCOS) (with <a href="https://github.com/okd-project/okd-coreos-pipeline/" target="_blank" rel="noopener noreferrer" class="">okd-coreos-pipeline</a>), to build OKD/SCOS (with <a href="https://github.com/okd-project/okd-payload-pipeline" target="_blank" rel="noopener noreferrer" class="">okd-payload-pipeline</a>) and to build operators (with <a href="https://github.com/okd-project/okd-operator-pipeline" target="_blank" rel="noopener noreferrer" class="">okd-operator-pipeline</a>). <a class="" href="https://okd.io/blog/2022/10/24/OKD-Streams-Building-the-Next-Generation-of-OKD-together/">The OKD Streams pipelines have been created to improve the
+RHEL9 readiness signal for Red Hat OpenShift. It allows developers to build and compose different tasks and pipelines to
+easily experiment with OpenShift and related technologies</a>. Both
+<code>okd-coreos-pipeline</code> and <code>okd-operator-pipeline</code> are already used in OKD's CI/CD and in the future
+<code>okd-payload-pipeline</code> might supersede OCP CI for building OKD payload components and mirroring OCP payload components.</p>]]></content>
+        <author>
+            <name>Jakob Meng</name>
+            <uri>https://github.com/jm1</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Building the OKD payload]]></title>
+        <id>https://okd.io/blog/2022/12/12/building-OKD-payload</id>
+        <link href="https://okd.io/blog/2022/12/12/building-OKD-payload"/>
+        <updated>2022-12-12T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Over the last couple of months, we've been busy building a new OKD release on CentOS Stream CoreOS (SCOS), and were able to present it for the OpenShift Commons Detroit 2022.]]></summary>
+        <content type="html"><![CDATA[<p>Over the last couple of months, we've been busy building a new OKD release on <a href="https://www.centos.org/centos-stream/" target="_blank" rel="noopener noreferrer" class="">CentOS Stream</a> <a href="https://en.wikipedia.org/wiki/Container_Linux" target="_blank" rel="noopener noreferrer" class="">CoreOS</a> (SCOS), and were able to present it for the <a class="" href="https://okd.io/blog/2022/10/20/OKD-at-Kubecon-NA-Detroit">OpenShift Commons Detroit 2022</a>.</p>
+<p>While some of us created a Tekton pipeline that could <a href="https://www.youtube.com/watch?v=HcGsvSms--A&amp;list=PLaR6Rq6Z4Iqck7Z0ekuJdsMU1fE6hkd6d&amp;index=2" target="_blank" rel="noopener noreferrer" class="">build SCOS</a> on a Kind cluster, others were tediously building the OKD payload with Prow, but also creating a <a href="https://tekton.dev/" target="_blank" rel="noopener noreferrer" class="">Tekton</a> pipeline for building that payload on any OpenShift or OKD cluster.</p>
+<p>The goal of this effort is to enable and facilitate community collaboration and contributions, giving anybody the ability to do their own payload builds and run tests themselves.</p>
+<p>This process has been difficult because OpenShift's Prow CI instance is not open to the public, and changes could thus not easily be tested before PR submission. Even after opening a PR, a non-Red Hatter will require a Red Hat engineer to add the <code>/ok-to-test</code> label in order to start Prow testing.</p>
+<p>With the new Tekton pipelines, we are now providing a straight forward way for anybody to build and test their own changes first (or even create their own Stream entirely), and then present the results to the OKD Working Group, which will then expedite the review process on the PR.</p>
+<p>In this article, I will shed some light on the building blocks of the OKD on SCOS payload, how it is built, both the Prow way, and the Tekton way:</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="whats-the-payload">What's the payload?<a href="https://okd.io/blog/2022/12/12/building-OKD-payload#whats-the-payload" class="hash-link" aria-label="Direct link to What's the payload?" title="Direct link to What's the payload?" translate="no">​</a></h2>
+<p>Until now, the OKD payload, like the OpenShift payload, was built by the <a href="https://github.com/openshift/release/tree/master/core-services/release-controller" target="_blank" rel="noopener noreferrer" class="">ReleaseController</a> in Prow.</p>
+<blockquote>
+<p>The release-controller automatically builds OpenShift release images when new images are created for a given OpenShift release. It detects changes to an image stream, launches a job to build and push the release payload image using <code>oc adm release new</code>, and then runs zero or more ProwJobs against the artifacts generated by the payload.</p>
+</blockquote>
+<p>A release image is nothing more than a ClusterVersionOperator image (CVO), with an extra layer containing the <code>release-manifests</code> folder. This folder contains :</p>
+<ul>
+<li class=""><code>image-references</code>: a list of all known images with their SHA digest,</li>
+<li class="">yaml manifest files for each operator controlled by the CVO.</li>
+</ul>
+<p>The list of images that is included in the <code>release-manifests</code> is calculated from the <code>release</code> <a href="https://developers.redhat.com/blog/2019/09/20/using-red-hat-openshift-image-streams-with-kubernetes-deployments#" target="_blank" rel="noopener noreferrer" class="">image stream</a>, taking :</p>
+<ul>
+<li class="">all images with label <code>io.openshift.release.operator=true</code> in that image stream</li>
+<li class="">plus any images referenced in the <code>/manifests/image-references</code> file within each of the images with this label.</li>
+</ul>
+<p>As you can imagine, the list of images in a release can change from one release to the next, depending on:</p>
+<ul>
+<li class="">new operators being delivered within the OpenShift release</li>
+<li class="">existing operators adding or removing an operand image</li>
+<li class="">operators previously included that are removed from the payload to be delivered independently, through OLM instead.</li>
+</ul>
+<p>In order to list the images contained in a release payload, run this command:</p>
+<div class="language-shell codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-shell codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#F8F8F2"><span class="token plain">oc adm release info </span><span class="token variable" style="color:rgb(189, 147, 249);font-style:italic">${RELEASE_IMAGE_URL}</span><br></span></code></pre></div></div>
+<p>For example:</p>
+<div class="language-shell codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-shell codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#F8F8F2"><span class="token plain">oc adm release info quay.io/okd/scos-release:4.12.0-0.okd-scos-2022-12-02-083740 </span><br></span></code></pre></div></div>
+<p>Now that we've established what needs to be built, let's take a deeper look at how the OKD on SCOS payload is built.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="building-okdscos-the-prow-way">Building OKD/SCOS the Prow way<a href="https://okd.io/blog/2022/12/12/building-OKD-payload#building-okdscos-the-prow-way" class="hash-link" aria-label="Direct link to Building OKD/SCOS the Prow way" title="Direct link to Building OKD/SCOS the Prow way" translate="no">​</a></h2>
+<p>The obvious way to build OKD on SCOS is to use <a href="https://docs.prow.k8s.io/docs/" target="_blank" rel="noopener noreferrer" class="">Prow</a> - THE Kubernetes-based CI/CD system, which is what builds OCP and OKD on FCOS already today. This is what Kubernetes uses upstream as well. :shrug:</p>
+<p>For a new OKD release to land in the <a href="https://origin-release.ci.openshift.org/" target="_blank" rel="noopener noreferrer" class="">releases</a> page, there's a whole bunch of Prow jobs that run. Hang on! It's a long story...</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="imagestreams">ImageStreams<a href="https://okd.io/blog/2022/12/12/building-OKD-payload#imagestreams" class="hash-link" aria-label="Direct link to ImageStreams" title="Direct link to ImageStreams" translate="no">​</a></h3>
+<p>Let's start by the end <!-- -->😉<!-- -->, and prepare a new image stream for OKD on SCOS images. This ImageStream (IS) is a placeholder for all images that form the OKD/SCOS payload.</p>
+<p>For OKD on Fedora CoreOS (OKD/FCOS) it's named <code>okd</code>.For OKD/SCOS, this ImageStream is named <code>okd-scos</code>.</p>
+<p>This ImageStream includes all payload images contained in the specific <code>OKD</code> release based on CentOS Stream CoreOS (SCOS)</p>
+<p>Among these payload images, we distinguish:</p>
+<ul>
+<li class="">Images that can be shared between OCP and OKD. These are built in Prow and mirrored into the <code>okd-scos</code> ImageStream.</li>
+<li class="">Images that have to be specifically built for OKD/SCOS, which are directly tagged into the <code>okd-scos</code> ImageStream. This is the case for images that are specific to the underlying operating system, or contain RHEL packages. These are: the <code>installer</code> images, the <code>machine-config-operator</code> image, the <code>machine-os-content</code> that includes the base operating system OSTree, as well as the <code>ironic</code> image for provisioning bare-metal nodes, and a few other images.</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="triggers-for-building-most-payload-images">Triggers for building most payload images<a href="https://okd.io/blog/2022/12/12/building-OKD-payload#triggers-for-building-most-payload-images" class="hash-link" aria-label="Direct link to Triggers for building most payload images" title="Direct link to Triggers for building most payload images" translate="no">​</a></h3>
+<p>Now that we've got the recipient Image Stream for the OKD payload images, let's start building some payloads!</p>
+<p>Take the <a href="https://github.com/openshift/cluster-network-operator" target="_blank" rel="noopener noreferrer" class="">Cluster Network Operator</a> for example:<br>
+<!-- -->For this operator, the same image can be used on OCP CI and OKD releases. Most payload images fit into this case.</p>
+<p>For such an image, the build is pretty straight forward. When a PR is filed for a GitHub repository that is part of a release payload:</p>
+<ul>
+<li class="">
+<p>The Pre-submit jobs run. It essentially builds the image and stores it in an ImageStream in an ephemeral namespace to run tests against several platforms (AWS, GCP, BareMetal, Azure, etc)</p>
+</li>
+<li class="">
+<p>Once the tests are green and the PR is approved and merges, the Post-submit jobs run. It essentially promotes the built image to the appropriate release-specific ImageStream:</p>
+<ul>
+<li class="">if the PR is for master, images are pushed to the <code>${next-release}</code> ImageStream</li>
+<li class="">If the PR is for <code>release-${MAJOR}.${MINOR}</code>, images are pushed to the <code>${MAJOR}.${MINOR}</code> ImageStream</li>
+</ul>
+</li>
+</ul>
+<p>Next, the <a href="https://github.com/openshift/release/blob/master/core-services/release-controller/_releases/release-ocp-4.13-ci.json#L12" target="_blank" rel="noopener noreferrer" class="">OCP release controller</a> which runs at every change to the ImageStream, will mirror all images from the <code>${MAJOR}.${MINOR}</code> ImageStream to the <code>scos-${MAJOR}.${MINOR}</code> ImageStream.</p>
+<!-- -->
+<p>As mentioned before, some of the images are not mirrored, and that brings us to the next section, on building those images that have content (whether code or manifests) specific to OKD.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="trigger-for-building-the-okd-specific-payload-images">Trigger for building the OKD-specific payload images<a href="https://okd.io/blog/2022/12/12/building-OKD-payload#trigger-for-building-the-okd-specific-payload-images" class="hash-link" aria-label="Direct link to Trigger for building the OKD-specific payload images" title="Direct link to Trigger for building the OKD-specific payload images" translate="no">​</a></h3>
+<p>For the OKD-specific images, the CI process is a bit different, as the image is built in the PostSubmit job and then directly promoted to the <code>okd-scos</code> IS, without going through the OCP CI to OKD mirroring step.
+This is called <a href="https://docs.ci.openshift.org/docs/how-tos/contributing-openshift-release/#variants" target="_blank" rel="noopener noreferrer" class="">a variant configuration</a>. You can see this for <a href="https://github.com/openshift/release/blob/master/ci-operator/config/openshift/machine-config-operator/openshift-machine-config-operator-master__okd-scos.yaml" target="_blank" rel="noopener noreferrer" class="">MachineConfigOperator</a> for example.</p>
+<!-- -->
+<p>The built images land directly in the <code>scos-${MAJOR}-${MINOR}</code> ImageStream.</p>
+<p>That is why there's no need for OCP's CI release controller to mirror these images from the CI ImageStream:
+During the PostSubmit phase, images are already getting built in parallel for OCP, OKD/FCOS and OKD/SCOS and pushed, respectively to <code>ocp/$MAJOR.$MINOR</code>, <code>origin/$MAJOR.$MINOR</code>, <code>origin/scos-$MAJOR.$MINOR</code></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="okd-release-builds">OKD release builds<a href="https://okd.io/blog/2022/12/12/building-OKD-payload#okd-release-builds" class="hash-link" aria-label="Direct link to OKD release builds" title="Direct link to OKD release builds" translate="no">​</a></h3>
+<p>Now the ImageStream <code>scos-$MAJOR.$MINOR</code> is getting populated by payload images. With every new image tag, the <a href="https://github.com/openshift/release/blob/master/core-services/release-controller/_releases/release-okd-scos-4.13.json" target="_blank" rel="noopener noreferrer" class="">release controller for OKD/SCOS</a> will  build a release image.</p>
+<p>The ReleaseController ensures that OpenShift update payload images (aka release images) are created whenever an ImageStream representing the images in a release is updated.</p>
+<p>Thanks to the annotation <code>release.openshift.io/config</code> on the <code>scos-${MAJOR}-{MINOR}</code> ImageStream, the controller will:</p>
+<ol>
+<li class="">Create a tag in the <code>scos-${MAJOR}-{MINOR}</code> ImageStream that uses the release name + current timestamp.</li>
+<li class="">Mirror all of the tags in the input ImageStream so that they can't be pruned.</li>
+<li class="">Launch a job in the job namespace to invoke <code>oc adm release new</code> from the mirror pointing to the release tag we created in step 1.</li>
+<li class="">If the job succeeds in pushing the tag, it sets an annotation on that tag <code>release.openshift.io/phase = "Ready"</code>, indicating that the release can be used by other steps. And that's how a new release appears in <a href="https://origin-release.ci.openshift.org/#4.13.0-0.okd-scos" target="_blank" rel="noopener noreferrer" class="">`https://origin-release.ci.openshift.org/#4.13.0-0.okd-scos</a></li>
+<li class="">The release state switches to "Verified" when the <a href="https://github.com/openshift/release/blob/master/core-services/release-controller/_releases/release-okd-scos-4.13.json#L20" target="_blank" rel="noopener noreferrer" class="">verification end-to-end test job</a>  succeeds.</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="building-the-tekton-way">Building the Tekton way<a href="https://okd.io/blog/2022/12/12/building-OKD-payload#building-the-tekton-way" class="hash-link" aria-label="Direct link to Building the Tekton way" title="Direct link to Building the Tekton way" translate="no">​</a></h2>
+<p>Building with Prow has the advantage of being driven by new code being pushed to payload components, thus building fresh releases as the code of <a href="https://github.com/openshift" target="_blank" rel="noopener noreferrer" class="">github.com/openshift</a> evolves.</p>
+<p>The problem is that Prow, along with all the clusters involved with it, the ImageStreams, etc. are not accessible to the OKD community outside of RedHat. Also, users might be interested in building custom OKD payload, in their own environment, to experiment exchanging components for example.</p>
+<p>To remove this impediment, the OKD team has been working on the OKD Payload pipeline based on Tekton.</p>
+<p>Building OKD payloads with Tekton can be done by cloning the <a href="https://github.com/okd-project/okd-payload-pipeline" target="_blank" rel="noopener noreferrer" class="">okd-payload-pipeline repository</a>. One extra advantage of this repository is the ability to see the list of components that form the OKD payload: In fact, the list under <a href="https://github.com/okd-project/okd-payload-pipeline/tree/main/buildconfigs" target="_blank" rel="noopener noreferrer" class="">buildconfigs</a> corresponds to the images in the OKD final payload. This list is currently manually synced with the list of OCP images on each release.</p>
+<p>The pipeline is fairly simple. Take the <a href="https://github.com/okd-project/okd-payload-pipeline/blob/main/pipelines/build-from-scratch.yaml" target="_blank" rel="noopener noreferrer" class="">build-from-scratch.yaml</a> for example. It has 3 main tasks:</p>
+<ul>
+<li class="">Build the base image and the builder image, with which all the payload images will be built<!-- -->
+<ul>
+<li class="">The builder image is a CentOS Stream 9 container image that includes all the dependencies needed to build payload components and is used as the build environment for them</li>
+<li class="">The built binaries are then layered onto a CentOS Stream 9 base image, creating a payload component image.</li>
+<li class="">The base image is shared across all the images in the release payload</li>
+</ul>
+</li>
+<li class="">Build payload images in batches (starting with the ones that don't have any dependencies)</li>
+<li class="">Finally, as all OKD payload component images are in the image stream, the OKD release image is in turn built, using the <code>oc adm release new</code> command.</li>
+</ul>
+<!-- -->
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="triggers">Triggers<a href="https://okd.io/blog/2022/12/12/building-OKD-payload#triggers" class="hash-link" aria-label="Direct link to Triggers" title="Direct link to Triggers" translate="no">​</a></h3>
+<p>For the moment, this pipeline has no triggers. It can be executed manually when needed. We are planning to automatically trigger the pipeline on a daily cadence.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="batch-build-task">Batch Build Task<a href="https://okd.io/blog/2022/12/12/building-OKD-payload#batch-build-task" class="hash-link" aria-label="Direct link to Batch Build Task" title="Direct link to Batch Build Task" translate="no">​</a></h3>
+<p>With a set of buildConfigs passed in the parameters, this task relies on an openshift <code>oc</code> image containing the client binary and loops on the list of build configs with a <code>oc start-build</code>, and waits for all the builds to complete.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="new-release-task">New Release Task<a href="https://okd.io/blog/2022/12/12/building-OKD-payload#new-release-task" class="hash-link" aria-label="Direct link to New Release Task" title="Direct link to New Release Task" translate="no">​</a></h3>
+<p>This task simply uses an OpenShift client image to call <code>oc adm release new</code> which creates the release image from the image stream <code>release</code> (on the OKD/OpenShift cluster where this Tekton pipeline is running), and mirroring the release image, and all the payload component images to a registry configured in its parameters.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="buildconfigs">BuildConfigs<a href="https://okd.io/blog/2022/12/12/building-OKD-payload#buildconfigs" class="hash-link" aria-label="Direct link to BuildConfigs" title="Direct link to BuildConfigs" translate="no">​</a></h3>
+<p>As explained above, the OKD payload Tekton pipeline heavily relies on the <a href="https://github.com/okd-project/okd-payload-pipeline/tree/main/buildconfigs" target="_blank" rel="noopener noreferrer" class="">buildconfigs</a>.
+This folder contains one buildconfig yaml file for each image included in the release payload.</p>
+<p>Each build config simply uses a builder image to build the operator binary, invoking the correct Dockerfile in the operator repository. Then, the binary is copied as a layer on top of an OKD base image, which is built in the preparatory task of the pipeline.</p>
+<p>This process currently uses the <a href="https://docs.okd.io/4.11/cicd/builds/understanding-image-builds.html" target="_blank" rel="noopener noreferrer" class="">OpenShift Builds API</a>. We are planning to move these builds to the <a href="https://shipwright.io/" target="_blank" rel="noopener noreferrer" class="">Shipwright</a> Builds API in order to enable builds outside of OCP or OKD clusters.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="updating-build-configs">Updating build configs<a href="https://okd.io/blog/2022/12/12/building-OKD-payload#updating-build-configs" class="hash-link" aria-label="Direct link to Updating build configs" title="Direct link to Updating build configs" translate="no">​</a></h3>
+<p>Upon deploying the Tekton OKD Payload pipeline on an OKD (or OpenShift) cluster, Kustomize is used in order to :</p>
+<ul>
+<li class="">patch the BuildConfig files, adding TAGS to the build arguments according to the type of payload we want to build (based on FCOS, SCOS or any other custom stream)</li>
+<li class="">patch the BuildConfig files, replacing the builder image references to the non-public <code>registry.ci.openshift.org/ocp/builder</code> in the payload component's Dockerfiles with the builder image reference from the local image stream</li>
+<li class="">setting resource requests and limits if needed</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="preparing-for-a-new-release">Preparing for a new release<a href="https://okd.io/blog/2022/12/12/building-OKD-payload#preparing-for-a-new-release" class="hash-link" aria-label="Direct link to Preparing for a new release" title="Direct link to Preparing for a new release" translate="no">​</a></h3>
+<p>The procedure to prepare a new release is still a work in progress at the time of writing.</p>
+<p>To build a new release, each BuildConfig file should be updated with the git branch corresponding to that release.<br>
+<!-- -->In the future, the branch can be passed along as a kustomization, or in the parameters of the pipeline.</p>
+<p>The list of images from a new OCP release (obtained through <code>oc adm release info</code>) must now be synced with the BuildConfigs present here:</p>
+<ul>
+<li class="">For any new image, a new BuildConfig file must be added</li>
+<li class="">For any image removed from the OCP release, the corresponding BuildConfig file must be removed.</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="take-away">Take away<a href="https://okd.io/blog/2022/12/12/building-OKD-payload#take-away" class="hash-link" aria-label="Direct link to Take away" title="Direct link to Take away" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-are-our-next-steps">What are our next steps?<a href="https://okd.io/blog/2022/12/12/building-OKD-payload#what-are-our-next-steps" class="hash-link" aria-label="Direct link to What are our next steps?" title="Direct link to What are our next steps?" translate="no">​</a></h3>
+<p>In the coming weeks and months, you can expect lots of changes, especially as the OKD community is picking up usage of OKD/SCOS, and doing their own Tekton Pipeline runs:</p>
+<ul>
+<li class="">Work to automate the OKD release procedure is progress by automatically verifying payload image signatures, signing the release, and tagging it on GitHub.</li>
+</ul>
+<p>The goal is to deliver a new OKD/SCOS on a sprint (3-weekly) basis, and to provide both the OCP teams and the OKD community with a fresh release to test much earlier than previously with the OCP release cadence.</p>
+<ul>
+<li class="">For the moment, OKD/SCOS releases are only verified on AWS. To gain more confidence in our release payloads, we will expand the test matrix to other platforms such as GCP, vSphere and Baremetal</li>
+<li class="">Enable GitOps on the Tekton pipeline repository, so that changes to the pipeline are automatically deployed on <a href="https://www.operate-first.cloud/" target="_blank" rel="noopener noreferrer" class="">OperateFirst</a> for the community to use the latest and greatest.</li>
+<li class="">The OKD Working Group will be collaborating with the <a href="https://massopen.cloud/" target="_blank" rel="noopener noreferrer" class="">Mass Open Cloud</a> to allow for deployments of test clusters on their baremetal infrastructure.</li>
+<li class="">The OKD Working Group will be publishing the Tekton Tasks and Pipelines used to build the SCOS Operating System as well as the OKD payload to <a href="https://hub.tekton.dev/" target="_blank" rel="noopener noreferrer" class="">Tekton Hub</a> and <a href="https://artifacthub.io/" target="_blank" rel="noopener noreferrer" class="">Artifact Hub</a></li>
+<li class="">The <a href="https://github.com/okd-project/okd-operator-pipeline/" target="_blank" rel="noopener noreferrer" class="">OKD operators Tekton pipeline</a> will be used for community builds of optional OLM operators. A first OKD operator has already been built with it, and other operators are to follow, starting with the Pipelines operator, which has long been an ask by the community</li>
+<li class="">Additionally, we are working on multi-arch releases for both OKD/SCOS and OKD/FCOS</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="opened-perspectives">Opened perspectives<a href="https://okd.io/blog/2022/12/12/building-OKD-payload#opened-perspectives" class="hash-link" aria-label="Direct link to Opened perspectives" title="Direct link to Opened perspectives" translate="no">​</a></h3>
+<p>Although in the near future the OKD team will still rely on Prow to build the payload images, the Tekton pipeline will start getting used to finalize the release.</p>
+<p>In addition, this Tekton pipeline has opened up new perspectives, even for OCP teams.</p>
+<p>One such example is for the <a href="https://github.com/openshift/api" target="_blank" rel="noopener noreferrer" class="">Openshift API team</a> who would like to use the Tekton pipeline to test API changes by building all components that are dependent of the OpenShift API from that PR, create an OKD release and test it thus getting extra quick feedback on impacts of the API changes on the OKD (and later OCP) releases.</p>
+<p>Another example is the possibility to build images on other platforms than Openshift or OKD platform, replacing build configs with Shipwright, or why not <code>docker build</code>...</p>
+<p>Whatever your favorite flavor is, we are looking forward to seeing the pipelines in action, increasing collaboration and improving our community feedback loop.</p>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[OKD Streams - Building the Next Generation of OKD together]]></title>
+        <id>https://okd.io/blog/2022/10/24/OKD-Streams-Building-the-Next-Generation-of-OKD-together</id>
+        <link href="https://okd.io/blog/2022/10/24/OKD-Streams-Building-the-Next-Generation-of-OKD-together"/>
+        <updated>2022-10-24T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[OKD is the community distribution of Kubernetes that powers Red Hat OpenShift. The OKD community has created reusable Tekton build pipelines on a shared Kubernetes cluster for the OKD build pipelines so that they could manage the build & release processes for OKD in the open.]]></summary>
+        <content type="html"><![CDATA[<p>OKD is the community distribution of Kubernetes that powers Red Hat OpenShift. The OKD community has created reusable Tekton build pipelines on a shared Kubernetes cluster for the OKD build pipelines so that they could manage the build &amp; release processes for OKD in the open.</p>
+<p>With the <a href="https://www.operate-first.cloud/" target="_blank" rel="noopener noreferrer" class="">operate-first.cloud</a> hosted at the <a href="https://massopen.cloud/" target="_blank" rel="noopener noreferrer" class="">massopen.cloud</a>, the OKD community has launched a fully open source release pipeline that the community can participate in to help support and manage the release cycle ourselves. The OKD Community is now able to build and release stable builds of OKD 4.12 on both Fedora CoreOS and the newly introduced CentOS Stream CoreOS. We are calling it OKD Streams.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="new-patterns-new-cicd-pipelines-and-a-new-coreos">New Patterns, New CI/CD Pipelines and a new CoreOS<a href="https://okd.io/blog/2022/10/24/OKD-Streams-Building-the-Next-Generation-of-OKD-together#new-patterns-new-cicd-pipelines-and-a-new-coreos" class="hash-link" aria-label="Direct link to New Patterns, New CI/CD Pipelines and a new CoreOS" title="Direct link to New Patterns, New CI/CD Pipelines and a new CoreOS" translate="no">​</a></h2>
+<p>Today we invite you into our OKD Streams initiative. An OKD Stream refers to a build, test, and release pipeline for any configuration of OKD, the open source kubernetes distribution that powers OpenShift. The <a href="http://okd.io/" target="_blank" rel="noopener noreferrer" class="">OKD working group</a> is pleased to announce the availability of tooling and processes that will enable building and testing many configurations, or "<strong>streams</strong>".  The OKD Working Group and Red Hat Engineering are now testing one such stream that runs an upstream version of RHEL9 via CentOS Streams CoreOS (‘SCOS’ for short) to improve our RHEL9 readiness signal for Red Hat OpenShift. It is the first of many OKD Streams that will enable developers inside and outside of Red Hat to easily experiment with and explore Cloud Native technologies. You can check out our <a href="https://origin-release.apps.ci.l2s4.p1.openshiftapps.com/dashboards/overview#4-scos-stable" target="_blank" rel="noopener noreferrer" class="">MVP OKD on SCOS release here</a>.</p>
+<p>With this initiative, the <a href="http://okd.io/" target="_blank" rel="noopener noreferrer" class="">OKD working group</a> has embraced new patterns and built new partnerships. We have leveraged the concepts in the <a href="https://www.operate-first.cloud/blog/operate-first-operate-open-governance-and-hybrid/" target="_blank" rel="noopener noreferrer" class="">open source managed service ‘Operate First’ pattern</a>, worked with the CentOS and CoreOS communities to build <a href="https://github.com/okd-project/okd-coreos-pipeline" target="_blank" rel="noopener noreferrer" class="">a pipeline for building SCOS</a> and applied new CI/CD technologies (Tekton) to build a new OKD release build pipeline service. The <a href="https://origin-release.apps.ci.l2s4.p1.openshiftapps.com/dashboards/overview#4-scos-stable" target="_blank" rel="noopener noreferrer" class="">MVP of OKD Streams</a>, for example, is an SCOS backed version of OKD built with a Tekton pipeline managed by the OKD working group that runs on AWS infrastructure managed by Operate First. Together we are unlocking some of the innovations to get better (and earlier) release signals for Kubernetes , OCP and RHEL and to enable the OKD community to get more deeply involved with the OKD build processes.</p>
+<p>The OKD Working group wanted to make participation in all of these <strong>activities</strong> easier for all Cloud Native developers and this has been the motivating force behind the OKD Streams initiative.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="from-the-one-size-fits-all-to-built-to-order">From the ‘One Size Fits All’ to ‘Built to Order’<a href="https://okd.io/blog/2022/10/24/OKD-Streams-Building-the-Next-Generation-of-OKD-together#from-the-one-size-fits-all-to-built-to-order" class="hash-link" aria-label="Direct link to From the ‘One Size Fits All’ to ‘Built to Order’" title="Direct link to From the ‘One Size Fits All’ to ‘Built to Order’" translate="no">​</a></h2>
+<p>There are main three problems that both the OKD working group and Red Hat Engineering teams spend a lot of time thinking about:</p>
+<ol>
+<li class="">how do we improve our release signals for OpenShift, RHEL, CoreOS</li>
+<li class="">how do we get features into the hands of our customer and partners faster</li>
+<li class="">how do we enable engineers to experiment and innovate</li>
+</ol>
+<p>Previously, what we referred to as an ‘OKD’ release, was built on the most recent release of <a href="https://origin-release.apps.ci.l2s4.p1.openshiftapps.com/dashboards/overview#4.12.0-0.okd" target="_blank" rel="noopener noreferrer" class="">OKD running on the latest stable release of Fedora CoreOS</a> (FCOS for short).  In actuality, we had a singular release pipeline that built a release of OKD with a bespoke version of FCOS. These releases of OKD gave us early signals for the impact of new operating system features that would eventually be landing in RHEL, where they will surface in RHEL CoreOS (RHCOS). It was (and still is) a very good way for developers to experiment with OKD and explore its functionality.</p>
+<p>The OKD community wanted to empower wider use of OKD for experimentation in more use cases that required layering on additional resources in some cases, and in others use cases, reducing the footprints for edge and local deployments. OKD has been stable enough for some to run production deployments. CERN’s OKD deployment on OpenStack, for example, is assembled with custom OKD build pipelines. The feedback from these OKD builds has been a source of inspiration for this OKD Streams initiative to enable more such use cases.</p>
+<p>The OKD Streams initiative invites more community input and feedback quickly into the project without interrupting the productized builds for OpenShift and OpenShift customers. We can experiment with new features that can then get pushed upstream into Kubernetes or downstream into the OpenShift product. We can reuse the Tekton build pipelines for building streams specific to HPC or Openstack or Bare Metal or whatever the payload customization needs to be for their organizations.</p>
+<p>Our goal is to make it simple for others to experiment.</p>
+<p>We are experimenting too. The first OKD Streams ‘experiment’ built with the new Tekton build pipeline running on an Operate First AWS Cluster is OKD running on SCOS, which is a future version of OpenShift running on a near-future version of RHEL that's leveraging CentOS Streams CoreOS. This will improve our RHEL9 readiness signal for OCP. Improved RHEL9 readiness signals with input from the community will showcase our work as we explore what the new OKD build service is going to mean for all of us.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="tekton-pipelines-as-the-building-blocks">Tekton Pipelines as the Building Blocks<a href="https://okd.io/blog/2022/10/24/OKD-Streams-Building-the-Next-Generation-of-OKD-together#tekton-pipelines-as-the-building-blocks" class="hash-link" aria-label="Direct link to Tekton Pipelines as the Building Blocks" title="Direct link to Tekton Pipelines as the Building Blocks" translate="no">​</a></h2>
+<p>Our new OKD Streams are built using Tekton pipelines, which makes it easier for us to explore building many different kinds of pipelines.</p>
+<p>Tekton is a Continuous Deployment (CD) system that enables us to run tasks and pipelines in a composable and flexible manner. This fits in nicely with our OKD Streams initiative where the focus is less on the artifacts that are produced than the pipeline that builds it.</p>
+<p>While OKD as a payload remains the core focus of the OKD Working Group, we are also collaborating with the Operate First Community to ensure that anyone is able to take the work we have done and lift and shift it to any cloud enabling OKD to run in any Kubernetes-based infrastructure anywhere. Now anybody can experiment and build their own ‘stream’ of OKD with the Tekton pipeline.</p>
+<p>This <strong>new pipeline</strong> approach enables builds that can be customized via parameters, even the tasks within the pipeline can be exchanged or moved around. Add your own tasks. They are reusable templates for creating your own testable stream of OKD. Run the pipelines on any infrastructure, including locally in Kubernetes using podman, for example, or you can run them on a vanilla Kubernetes cluster. We are enabling access to the Operate First managed OKD <strong>Build Service</strong> to deploy more of these builds and pipelines to get some ideas that we have at Red Hat out into the community for early feedback AND to let other community members test their ideas.</p>
+<p>As an open source community, we’re always evolving and learning together. Our goal is to make OKD the goto place to experiment and innovate for the entire OpenShift ecosystem and beyond, to showcase new features and functionalities, and to fail fast and often without impacting product releases or incurring more technical debt.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-ask">THE ASK<a href="https://okd.io/blog/2022/10/24/OKD-Streams-Building-the-Next-Generation-of-OKD-together#the-ask" class="hash-link" aria-label="Direct link to THE ASK" title="Direct link to THE ASK" translate="no">​</a></h2>
+<p>Help drive faster innovation into OCP, OKD, Kubernetes and RHEL along with the multitude of other Cloud Native open source projects that are part of the OpenShift and the cloud native ecosystem.</p>
+<ul>
+<li class=""><a href="https://github.com/okd-project/okd-scos/releases/tag/4.12.0-0.okd-scos-2022-10-25-053756" target="_blank" rel="noopener noreferrer" class="">Download the MVP OKD/SCOS</a> build and deploy it!</li>
+<li class="">Review our <a href="https://github.com/okd-project/okd-coreos-pipeline" target="_blank" rel="noopener noreferrer" class="">Tekton OKD Build pipelines</a>. Try running them on your own Kubernetes cluster with Tekton - help us make our pipelines more efficient and easier to re-use.</li>
+<li class="">Review our <a href="https://github.com/okd-project/okd-coreos-pipeline/blob/main/README.md" target="_blank" rel="noopener noreferrer" class="">pipeline documentation</a> and help us make it better.</li>
+<li class="">Fork our pipelines and add your own tasks and resources and let us know how it goes.</li>
+<li class="">Come to an <a href="https://calendar.fedoraproject.org/list/okd/" target="_blank" rel="noopener noreferrer" class="">OKD Working Group meeting</a> and share your OKD use cases with the rest of the community. We’ll help you connect with like minded collaborators!</li>
+</ul>
+<p>This project is a game changer for lots of open source communities internally and externally. We know there are folks out there in the OKD working group and in the periphery that haven't spoken up and we'd love to hear from you, especially if you are currently doing bespoke OKD builds. Will this unblock your innovation the way we think it will?</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="additional-resources">Additional Resources<a href="https://okd.io/blog/2022/10/24/OKD-Streams-Building-the-Next-Generation-of-OKD-together#additional-resources" class="hash-link" aria-label="Direct link to Additional Resources" title="Direct link to Additional Resources" translate="no">​</a></h2>
+<ul>
+<li class=""><a href="https://github.com/okd-project" target="_blank" rel="noopener noreferrer" class="">OKD Github</a></li>
+<li class=""><a href="https://okd.io/" target="_blank" rel="noopener noreferrer" class="">OKD.io</a></li>
+<li class=""><a href="https://origin-release.apps.ci.l2s4.p1.openshiftapps.com/dashboards/overview#4-scos-stable" target="_blank" rel="noopener noreferrer" class="">MVP Release page</a></li>
+<li class=""><a href="https://www.youtube.com/watch?v=ClHdiChDh3Q" target="_blank" rel="noopener noreferrer" class="">Introducing OKD Streams</a></li>
+<li class=""><a href="https://youtube.com/playlist?list=PLaR6Rq6Z4Iqck7Z0ekuJdsMU1fE6hkd6d" target="_blank" rel="noopener noreferrer" class="">Full OKD Streams playlist</a></li>
+<li class=""><a href="https://www.operate-first.cloud/blog/operate-first-operate-open-governance-and-hybrid" target="_blank" rel="noopener noreferrer" class="">Operate First Principles</a></li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="kudos-and-thank-you">Kudos and Thank you<a href="https://okd.io/blog/2022/10/24/OKD-Streams-Building-the-Next-Generation-of-OKD-together#kudos-and-thank-you" class="hash-link" aria-label="Direct link to Kudos and Thank you" title="Direct link to Kudos and Thank you" translate="no">​</a></h2>
+<p>Operate First’s Infrastructure Team: Thorsten Schwesig, Humair Khan, Tom Coufal, Marcel Hild
+Red Hat’s CFE Team: Luigi Zuccarelli, Sherine Khoury
+OKD Working Group: Vadim Rutkovsky, Alessandro Di Stefano, Jaime Magiera, Brian Innes
+CentOS Cloud and HPC SIGs: Amy Marrich, Christian Glombek, Neal Gompa</p>]]></content>
+        <author>
+            <name>Diane Mueller</name>
+            <uri>https://github.com/dmueller2001</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[OKD at KubeCon + CloudNativeCon North America 2022]]></title>
+        <id>https://okd.io/blog/2022/10/20/OKD-at-Kubecon-NA-Detroit</id>
+        <link href="https://okd.io/blog/2022/10/20/OKD-at-Kubecon-NA-Detroit"/>
+        <updated>2022-10-20T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Are you heading to Kubecon/NA October 24, 2022 - October 28, 2022 in Detroit at KubeCon + CloudNativeCon North America 2022?]]></summary>
+        <content type="html"><![CDATA[<p>Are you heading to Kubecon/NA October 24, 2022 - October 28, 2022 in Detroit at KubeCon + CloudNativeCon North America 2022?</p>
+<p>If so, here's where you'll find members of the OKD Working Group and Red Hat engineers that working on delivering the latest releases of OKD at Kubecon!</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="october-25th">October 25th<a href="https://okd.io/blog/2022/10/20/OKD-at-Kubecon-NA-Detroit#october-25th" class="hash-link" aria-label="Direct link to October 25th" title="Direct link to October 25th" translate="no">​</a></h2>
+<p>At the OpenShift Commons Gathering on Tuesday, October 25, 2022 | 9:00 a.m. - 6:00 p.m. EDT, we're hosting an in-person OKD Working Group Lunch &amp; Learn Meet up from 12 noon to 3 pm lead by co-chairs <a href="https://github.com/JaimeMagiera" target="_blank" rel="noopener noreferrer" class="">Jaime Magiera (ICPSR at University of Michigan Institute for Social Research)</a>, <a href="https://github.com/dmueller2001" target="_blank" rel="noopener noreferrer" class="">Diane Mueller(Red Hat)</a> and special guests including <a href="https://github.com/elmiko" target="_blank" rel="noopener noreferrer" class="">Michael McCune(Red Hat)</a> in Break-out room D at the Westin Book Cadillac a 10 minute walk from the conference venue.
+followed by a Lightning Talk: OKD Working Group Update &amp; Road Map on the OpenShift Common main stage at 3:45 pm. The main stage event will be live streamed via Hopin so if you are NOT attending in person, you'll be able to join us online.</p>
+<p>Registration for OpenShift Commons Gathering is FREE and OPEN to ALL for both in-person and virtual attendance - <a href="https://commons.openshift.org/gatherings/kubecon-22-oct-25/" target="_blank" rel="noopener noreferrer" class="">https://commons.openshift.org/gatherings/kubecon-22-oct-25/</a></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="october-27th">October 27th<a href="https://okd.io/blog/2022/10/20/OKD-at-Kubecon-NA-Detroit#october-27th" class="hash-link" aria-label="Direct link to October 27th" title="Direct link to October 27th" translate="no">​</a></h2>
+<p>At 11:30 am EDT, the OKD Working Group will hold a Kubecon Virtual Office Hour that on OKD Streams initiatives and the latest release lead by OKD Working Group members:
+<a href="https://github.com/vrutkovs" target="_blank" rel="noopener noreferrer" class="">Vadim Rutkovsky</a>, <a href="https://github.com/lmzuccarelli" target="_blank" rel="noopener noreferrer" class="">Luigi Mario Zuccarelli</a>, <a href="https://github.com/LorbusChris" target="_blank" rel="noopener noreferrer" class="">Christian Glombek</a> and <a href="https://github.com/craychee" target="_blank" rel="noopener noreferrer" class="">Michelle Krejci</a>!</p>
+<p>Registration for the virtual Kubecon/NA event is required to join the Kubecon Virtual Office Hour</p>
+<p>If you're attending in person and just want to grab a cuppa coffee and have a chat with us, please reach ping either of the OKD working group co-chairs <a href="https://twitter.com/jaime4a2" target="_blank" rel="noopener noreferrer" class="">Jaime Magiera (ICPSR at University of Michigan Institute for Social Research)</a>, or <a href="https://twitter.com/pythondj" target="_blank" rel="noopener noreferrer" class="">Diane Mueller(Red Hat)</a></p>
+<p>Come connect with us to discuss the OKD Road Map, OKD Streams initiative, MVP Release of OKD on CentOS Streams and the latest use cases for OKD, and talk all things open with our team.</p>]]></content>
+        <author>
+            <name>Diane Mueller</name>
+            <uri>https://github.com/dmueller2001</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[An introduction]]></title>
+        <id>https://okd.io/blog/an-introduction-to-debugging-okd-release-artifacts</id>
+        <link href="https://okd.io/blog/an-introduction-to-debugging-okd-release-artifacts"/>
+        <updated>2022-09-09T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[by Denis Moiseev and Michael McCune]]></summary>
+        <content type="html"><![CDATA[<p><em>by <a href="https://github.com/lobziik" target="_blank" rel="noopener noreferrer" class="">Denis Moiseev</a> and <a href="https://github.com/elmiko" target="_blank" rel="noopener noreferrer" class="">Michael McCune</a></em></p>
+<p>During the course of installing, operating, and maintaining an OKD cluster it is natural for users to come across strange behaviors and failures that are difficult to understand. As Red Hat engineers working on OpenShift, we have many tools at our disposal to research cluster failures and to report our findings to our colleagues. We would like to share some of our experiences, techniques, and tools with the wider OKD community in the hopes of inspiring others to investigate these areas.</p>
+<p>As part of our daily activities we spend a significant amount of time investigating bugs, and also failures in our release images and testing systems. As you might imagine, to accomplish this task we use many tools and pieces of <em>tribal knowledge</em> to understand not only the failures themselves, but the complexity of the build and testing infrastructures. As Kubernetes and OpenShift have grown, there has always been an organic growth of tooling and testing that helps to support and drive the development process forward. To fully understand the depths of these processes is to be actively following what is happening with the development cycle. This is not always easy for users who are also focused on delivering high quality service through their clusters.</p>
+<p>On 2 September, 2022, we had the opportunity to record a video of ourselves diving into the <a href="https://amd64.origin.releases.ci.openshift.org/" target="_blank" rel="noopener noreferrer" class="">OKD release artifacts</a> to show how we investigate failures in the continuous integration release pipeline. In this video we walk through the process of finding a failing release test, examining the <a href="https://docs.prow.k8s.io/docs/overview/architecture/" target="_blank" rel="noopener noreferrer" class="">Prow console</a>, and then exploring the results that we find. We explain what these artifacts mean, how to further research failures that are found, and share some other web-based tools that you can use to find similar failures, understand the testing workflow, and ultimately share your findings through a bug report.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/4QPc7iOTaWE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+<p>To accompany the video, here are some of the links that we explore and related content:</p>
+<ul>
+<li class=""><a href="https://www.okd.io/installation/" target="_blank" rel="noopener noreferrer" class="">www.okd.io/installation/</a> - the main OKD installation page, where our journey begins</li>
+<li class=""><a href="https://amd64.origin.releases.ci.openshift.org/" target="_blank" rel="noopener noreferrer" class="">amd64.origin.releases.ci.openshift.org/</a> - OKD releases for AMD64, the place to go for release images and continuous integration reporting</li>
+<li class=""><a href="https://docs.prow.k8s.io/docs/overview/architecture/" target="_blank" rel="noopener noreferrer" class="">docs.prow.k8s.io/docs/overview/architecture/</a> - an overview of Prow architecture, this is useful to understand how Prow operates</li>
+<li class=""><a href="https://github.com/openshift/release" target="_blank" rel="noopener noreferrer" class="">github.com/openshift/release</a> - OpenShift and OKD’s Prow configuration, go here to find how the jobs are setup</li>
+<li class=""><a href="https://github.com/openshift/origin/" target="_blank" rel="noopener noreferrer" class="">github.com/openshift/origin/</a> - conformance tests for OpenShift and OKD, this is where many of the Kubernetes tests are located</li>
+<li class=""><a href="https://steps.ci.openshift.org/" target="_blank" rel="noopener noreferrer" class="">steps.ci.openshift.org/</a> - CI step registry, useful for discovering how test jobs flow together</li>
+<li class=""><a href="https://search.ci.openshift.org/" target="_blank" rel="noopener noreferrer" class="">search.ci.openshift.org/</a> - CI log search, useful for finding similar test failures</li>
+<li class=""><a href="https://docs.ci.openshift.org/docs/" target="_blank" rel="noopener noreferrer" class="">docs.ci.openshift.org/docs/</a> - home of the OpenShift CI docs</li>
+<li class=""><a href="https://docs.ci.openshift.org/docs/getting-started/useful-links/" target="_blank" rel="noopener noreferrer" class="">docs.ci.openshift.org/docs/getting-started/useful-links/</a> - useful links to various services, also links to talks and presentations</li>
+<li class=""><a href="https://docs.ci.openshift.org/docs/how-tos/artifacts/" target="_blank" rel="noopener noreferrer" class="">docs.ci.openshift.org/docs/how-tos/artifacts/</a> - explanations of CI artifacts</li>
+<li class=""><a href="https://issues.redhat.com/" target="_blank" rel="noopener noreferrer" class="">issues.redhat.com</a> - OpenShift/OKD bug reporting system</li>
+</ul>
+<p>Finally, if you do find bugs or would like report strange behavior in your clusters, remember to visit <a href="https://issues.redhat.com/" target="_blank" rel="noopener noreferrer" class="">issues.redhat.com</a> and use the project <strong>OCPBUGS</strong>.</p>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[OKD Working Group Office Hours at KubeconEU on OpenShift.tv]]></title>
+        <id>https://okd.io/blog/2021/05/06/OKD-Office-Hours-at-KubeconEU-on-OpenShiftTV</id>
+        <link href="https://okd.io/blog/2021/05/06/OKD-Office-Hours-at-KubeconEU-on-OpenShiftTV"/>
+        <updated>2021-05-06T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[On May 6th 2020, OKD-Working Group members hosted an hour long community led Office Hour with a brief introduction to the latest release by Red Hat's Charro Gruver then live Q/A!]]></summary>
+        <content type="html"><![CDATA[<p>On May 6th 2020, <a href="https://groups.google.com/g/okd-wg" target="_blank" rel="noopener noreferrer" class="">OKD-Working Group</a> members hosted an hour long community led Office Hour with a brief introduction to the latest release by Red Hat's Charro Gruver then live Q/A!</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="video-from-okd-working-group-office-hours-at-kubeconeu-on-openshifttv">Video from OKD Working Group Office Hours at KubeconEU on OpenShift.tv<a href="https://okd.io/blog/2021/05/06/OKD-Office-Hours-at-KubeconEU-on-OpenShiftTV#video-from-okd-working-group-office-hours-at-kubeconeu-on-openshifttv" class="hash-link" aria-label="Direct link to Video from OKD Working Group Office Hours at KubeconEU on OpenShift.tv" title="Direct link to Video from OKD Working Group Office Hours at KubeconEU on OpenShift.tv" translate="no">​</a></h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2WV4jtTs9Bg?start=45" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+<p>Join the <a href="https://groups.google.com/g/okd-wg" target="_blank" rel="noopener noreferrer" class="">OKD-Working Group</a> and add your voice to the conversation!</p>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[From OKD to OpenShift in 3 Years - talk by Josef Meier (Rohde & Schwarz) from OpenShift Commons Gathering at Kubecon]]></title>
+        <id>https://okd.io/blog/2021/05/04/from-OKD-to-OpenShift-in-3-Years</id>
+        <link href="https://okd.io/blog/2021/05/04/from-OKD-to-OpenShift-in-3-Years"/>
+        <updated>2021-05-04T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[On May 4th 2020, OKD-Working Group member Josef Meier gave a wonderful talk about Rohde & Schwarz's Journey to OpenShift 4 from OKD to ARO (Azure Red Hat OpenShift) and discussed benefits of participating in the OKD Working Group!]]></summary>
+        <content type="html"><![CDATA[<p>On May 4th 2020, <a href="https://groups.google.com/g/okd-wg" target="_blank" rel="noopener noreferrer" class="">OKD-Working Group</a> member Josef Meier gave a wonderful talk about Rohde &amp; Schwarz's Journey to OpenShift 4 from OKD to ARO (Azure Red Hat OpenShift) and discussed benefits of participating in the OKD Working Group!</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/1CEIRK9H1-w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+<p>Join the <a href="https://groups.google.com/g/okd-wg" target="_blank" rel="noopener noreferrer" class="">OKD-Working Group</a> and add your voice to the conversation!</p>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Recap OKD Testing and Deployment Workshop - Videos and Additional Resources]]></title>
+        <id>https://okd.io/blog/2021/03/22/recap-okd-testing-deployment-workshop</id>
+        <link href="https://okd.io/blog/2021/03/22/recap-okd-testing-deployment-workshop"/>
+        <updated>2021-03-22T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[On March 20th, OKD-Working Group hosted a day-long event to bring together people from the OKD and related Open Source project communities to collaborate on testing and documentation of the OKD 4 install and upgrade processes for the various platforms that people are deploying OKD 4 on as well to identify any issues with the current documentation for these processes and triage them together.]]></summary>
+        <content type="html"><![CDATA[<p>On March 20th, <a href="https://groups.google.com/g/okd-wg" target="_blank" rel="noopener noreferrer" class="">OKD-Working Group</a> hosted a day-long event to bring together people from the OKD and related Open Source project communities to collaborate on testing and <a href="https://github.com/elmiko/okd-deployment-configuration-guides" target="_blank" rel="noopener noreferrer" class="">documentation of the OKD 4 install and upgrade processes for the various platforms</a> that people are deploying OKD 4 on as well to identify any issues with the current documentation for these processes and triage them together.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-okd-working-group-held-a-virtual-community-hosted-workshop-on-testing-and-deploying-okd4-on-march-20th">The OKD Working Group held a virtual community-hosted workshop on testing and deploying OKD4 on March 20th<a href="https://okd.io/blog/2021/03/22/recap-okd-testing-deployment-workshop#the-okd-working-group-held-a-virtual-community-hosted-workshop-on-testing-and-deploying-okd4-on-march-20th" class="hash-link" aria-label="Direct link to The OKD Working Group held a virtual community-hosted workshop on testing and deploying OKD4 on March 20th" title="Direct link to The OKD Working Group held a virtual community-hosted workshop on testing and deploying OKD4 on March 20th" translate="no">​</a></h2>
+<p>The day started with all attendees together in the ‘main stage’ area for 2 hours where community members gave an short welcome along with the following four presentations:</p>
+<ul>
+<li class=""><a href="https://youtu.be/fOKve11GOJg" target="_blank" rel="noopener noreferrer" class="">What is OKD4 (with a Release Update) - by Charro Gruver (Red Hat)</a></li>
+<li class=""><a href="https://youtu.be/HmmV1mLRtbM" target="_blank" rel="noopener noreferrer" class="">Walk Thru of the OKD Release and Build Processes - Vadim Rutkovsky (Red Hat)</a></li>
+<li class=""><a href="https://youtu.be/-AwpvgbaMVg" target="_blank" rel="noopener noreferrer" class="">Walk Thru of the OKD Deployment and Configuration Guides - Jamie Magiera (UMich)</a></li>
+<li class=""><a href="https://youtu.be/by6ZmwWC8bs" target="_blank" rel="noopener noreferrer" class="">Best Practices such as DNS/DHCP server and Load Balancer Configuration) - Josef Meier (Rohde and Schwarz)</a></li>
+</ul>
+<p>Then attendees then broke into track sessions specific to the deployment target platforms for deep dive demos with live Q/A, answered as many questions as possible about that specific deployment target's configurations, attempted to identify any missing pieces in the documentation and triage the documentation as we went along.</p>
+<p>The 4 track break-out rooms set-up for 2.5 hours of deployment walk throughs and Q/A with session leads:</p>
+<ul>
+<li class=""><a href="https://youtu.be/vCoznRt3_2I" target="_blank" rel="noopener noreferrer" class="">Automated Installation on vSphere UPI - lead by Jaime Magiera (UMich) and Josef Meier (Rohde &amp; Schwarz)</a></li>
+<li class=""><a href="https://youtu.be/eM_pYnf_xFw" target="_blank" rel="noopener noreferrer" class="">Bare Metal/UPI - lead by Andrew Sullivan (Red Hat) and Jason Pittman (Red Hat)</a></li>
+<li class=""><a href="https://youtu.be/lI382l3u4fM" target="_blank" rel="noopener noreferrer" class="">Single Node Cluster - lead by Charro Gruver (Red Hat) and Bruce Link (BCIT)</a></li>
+<li class=""><a href="https://youtu.be/nDDhguTZgLE" target="_blank" rel="noopener noreferrer" class="">Home Lab Setup - lead by Craig Robinson (Red Hat), Sri Ramanujam (Datto) and Vadim Rutkovsky(Red Hat)</a></li>
+</ul>
+<p>Our goal was to triage our existing community documentation, identify any short comings and encourage your participation in the <a href="https://groups.google.com/g/okd-wg" target="_blank" rel="noopener noreferrer" class="">OKD-Working Group</a>'s testing of the installation and upgrade processes for each OKD release.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="resources">Resources:<a href="https://okd.io/blog/2021/03/22/recap-okd-testing-deployment-workshop#resources" class="hash-link" aria-label="Direct link to Resources:" title="Direct link to Resources:" translate="no">​</a></h2>
+<ul>
+<li class=""><a href="https://www.youtube.com/playlist?list=PLaR6Rq6Z4Iqfe0yvNnyYZnYR3Z3Emb_Zm" target="_blank" rel="noopener noreferrer" class="">Link to Playlist</a></li>
+<li class=""><a href="https://okd.io/assets/files/OKD-Workshop-592c81b6945660e94a5d0a7bbc4f6b9c.pdf" target="_blank" class="">OKD Workshop Slides - Charro Gruver</a></li>
+<li class=""><a href="https://okd.io/assets/files/workshop-okd-2021-03-20-josef-meier-dns-diagram-94746d8cb73c0bd0f97ebc8e7fd745de.pdf" target="_blank" class="">DNS DHCP Load Balancer Diagram - Josef Meier</a></li>
+</ul>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Please avoid using FCOS 33.20210301.3.1 for new OKD installs]]></title>
+        <id>https://okd.io/blog/2021/03/19/please-avoid-using-fcos-33.20210301.3.1</id>
+        <link href="https://okd.io/blog/2021/03/19/please-avoid-using-fcos-33.20210301.3.1"/>
+        <updated>2021-03-19T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Due to several issues ([1] and [2]) fresh installations using FCOS]]></summary>
+        <content type="html"><![CDATA[<p>Due to several issues ([1] and [2]) fresh installations using FCOS
+33.20210301.3.1 would fail. The fix is coming in Podman 3.1.0.</p>
+<p>Please use an older stable release - 33.20210217.3.0 - as a starting
+point instead. See download links at
+<a href="https://builds.coreos.fedoraproject.org/browser?stream=stable%5D" target="_blank" rel="noopener noreferrer" class="">https://builds.coreos.fedoraproject.org/browser?stream=stable</a> (might
+need some scrolling),</p>
+<p>Note, that only fresh installs are affected. Also, you won't be left
+with outdated packages, as OKD does update themselves to latest stable
+FCOS content during installation/update.</p>
+<ol>
+<li class=""><a href="https://bugzilla.redhat.com/show_bug.cgi?id=1936927" target="_blank" rel="noopener noreferrer" class="">https://bugzilla.redhat.com/show_bug.cgi?id=1936927</a></li>
+<li class=""><a href="https://github.com/openshift/okd/issues/566" target="_blank" rel="noopener noreferrer" class="">https://github.com/openshift/okd/issues/566</a></li>
+</ol>
+<p>--
+Cheers,
+Vadim</p>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[OKD Testing and Deployment Workshop]]></title>
+        <id>https://okd.io/blog/2021/03/16/testing-deployment-workshop</id>
+        <link href="https://okd.io/blog/2021/03/16/testing-deployment-workshop"/>
+        <updated>2021-03-16T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[The OKD Working Group is hosting a virtual workshop on testing and deploying OKD4]]></summary>
+        <content type="html"><![CDATA[<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-okd-working-group-is-hosting-a-virtual-workshop-on-testing-and-deploying-okd4">The OKD Working Group is hosting a virtual workshop on testing and deploying OKD4<a href="https://okd.io/blog/2021/03/16/testing-deployment-workshop#the-okd-working-group-is-hosting-a-virtual-workshop-on-testing-and-deploying-okd4" class="hash-link" aria-label="Direct link to The OKD Working Group is hosting a virtual workshop on testing and deploying OKD4" title="Direct link to The OKD Working Group is hosting a virtual workshop on testing and deploying OKD4" translate="no">​</a></h2>
+<p>On March 20th, <a href="https://groups.google.com/g/okd-wg" target="_blank" rel="noopener noreferrer" class="">OKD-Working Group</a> is hosting a <a href="https://hopin.com/events/okd-testing-and-deployment-workshop" target="_blank" rel="noopener noreferrer" class="">one day event</a> to bring together people from the OKD and related Open Source project communities to collaborate on testing and <a href="https://github.com/elmiko/okd-deployment-configuration-guides" target="_blank" rel="noopener noreferrer" class="">documentation of the OKD 4 install and upgrade processes for the various platforms</a> that people are deploying OKD 4 on as well to identify any issues with the current documentation for these processes and triage them together.</p>
+<p>The day will start with all attendees together in the ‘main stage’ area for 2 hours where we will give an short welcome and describe the logistics for the day, give a brief introduction to OKD4 itself then walk thru a install deployment to vSphere using UPI approach along with a few other more universal best practices such as DNS/DHCP server configuration) that apply to all deployment targets.</p>
+<p>Then we will break into tracks specific to the deployment target platforms for deep dive demos with Q/A, try and answer any questions you have about your specific deployment target's configurations, identify any missing pieces in the documentation and triage the documentation as we go.</p>
+<p>There will be 4 track break-out rooms set-up for 3 hours of deployment walk throughs and Q/A with session leads:</p>
+<ul>
+<li class="">vSphere/UPI - lead by Jaime Magiera (UMich) and Josef Meier (Rohde &amp; Schwarz)</li>
+<li class="">Bare Metal/UPI - lead by Andrew Sullivan (Red Hat) and Jason Pittman (Red Hat)</li>
+<li class="">Single Node Cluster - lead by Charro Gruver (Red Hat) and Bruce Link (BCIT)</li>
+<li class="">Home Lab Setup - lead by Craig Robinson (Red Hat) and Sri Ramanujam (Datto)</li>
+</ul>
+<p>Our goal is to triage our existing community documentation, identify any short comings and encourage your participation in the <a href="https://groups.google.com/g/okd-wg" target="_blank" rel="noopener noreferrer" class="">OKD-Working Group</a>'s testing of the installation and upgrade processes for each OKD release.</p>
+<p>This is community event NOT meant as a substitute for Red Hat technical support.</p>
+<p>There is no admission or ticket charge for <a href="https://groups.google.com/g/okd-wg" target="_blank" rel="noopener noreferrer" class="">OKD-Working Group</a> events. However, you are required to complete a free hopin.to platform registration and watch the hopin site for updates about registration and schedule updates.</p>
+<p>We are committed to fostering an open and welcoming environment at our working group meetings and events. We set expectations for inclusive behavior through our code of conduct and media policies, and are prepared to enforce these.</p>
+<p>You can Register for the workshop <a href="https://hopin.com/events/okd-testing-and-deployment-workshop" target="_blank" rel="noopener noreferrer" class="">here</a>:</p>
+<p><a href="https://hopin.com/events/okd-testing-and-deployment-workshop" target="_blank" rel="noopener noreferrer" class="">https://hopin.com/events/okd-testing-and-deployment-workshop</a></p>]]></content>
+    </entry>
+</feed>

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkokd_web=self.webpackChunkokd_web||[]).push([["6431"],{29328(e){e.exports=JSON.parse('{"metadata":{"permalink":"/blog","page":1,"postsPerPage":10,"totalPages":2,"totalCount":20,"nextPage":"/blog/page/2","blogDescription":"Updates from the OKD team on development","blogTitle":"Blog"}}')}}]);
