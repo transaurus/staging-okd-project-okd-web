@@ -1,0 +1,10 @@
+{
+  "sourceUrl": "https://github.com/okd-project/okd-web",
+  "branch": "main",
+  "docusaurusRoot": ".",
+  "configFile": "docusaurus.config.ts",
+  "translateCommand": "npx docusaurus write-translations",
+  "buildCommand": "npm run build",
+  "buildOutput": "build",
+  "packageManager": "npm"
+}
