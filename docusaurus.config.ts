@@ -51,14 +51,14 @@ const config: Config = {
   organizationName: "okd-project", // Usually your GitHub org/user name.
   projectName: "okd-web", // Usually your repo name.
 
-  onBrokenLinks: "throw",
+  onBrokenLinks: 'warn',
   onBrokenAnchors: "throw",
-  onBrokenMarkdownLinks: "throw",
+  onBrokenMarkdownLinks: "warn",
   onDuplicateRoutes: "throw",
 
   i18n: {
     defaultLocale: "en",
-    locales: ["en"],
+    locales: ["en", "zh-Hans"],
   },
 
   themes: [

@@ -1,0 +1,50 @@
+{
+  "link.title.Docs": {
+    "message": "Docs",
+    "description": "The title of the footer links column with title=Docs in the footer"
+  },
+  "link.title.Community": {
+    "message": "Community",
+    "description": "The title of the footer links column with title=Community in the footer"
+  },
+  "link.title.More": {
+    "message": "More",
+    "description": "The title of the footer links column with title=More in the footer"
+  },
+  "link.item.label.Docs": {
+    "message": "Docs",
+    "description": "The label of footer link with label=Docs linking to /docs/project/"
+  },
+  "link.item.label.Latest Product Docs": {
+    "message": "Latest Product Docs",
+    "description": "The label of footer link with label=Latest Product Docs linking to https://docs.okd.io/latest/"
+  },
+  "link.item.label.K8s Slack (#okd-dev)": {
+    "message": "K8s Slack (#okd-dev)",
+    "description": "The label of footer link with label=K8s Slack (#okd-dev) linking to https://slack.k8s.io/"
+  },
+  "link.item.label.Google Group": {
+    "message": "Google Group",
+    "description": "The label of footer link with label=Google Group linking to https://groups.google.com/g/okd-wg"
+  },
+  "link.item.label.X/Twitter": {
+    "message": "X/Twitter",
+    "description": "The label of footer link with label=X/Twitter linking to https://twitter.com/okd_io"
+  },
+  "link.item.label.Blog": {
+    "message": "Blog",
+    "description": "The label of footer link with label=Blog linking to /blog"
+  },
+  "link.item.label.GitHub": {
+    "message": "GitHub",
+    "description": "The label of footer link with label=GitHub linking to https://github.com/okd-project"
+  },
+  "link.item.label.Site Debug": {
+    "message": "Site Debug",
+    "description": "The label of footer link with label=Site Debug linking to /__docusaurus/debug"
+  },
+  "copyright": {
+    "message": "Copyright © 2026 OKD Contributors & Red Hat.",
+    "description": "The footer copyright"
+  }
+}

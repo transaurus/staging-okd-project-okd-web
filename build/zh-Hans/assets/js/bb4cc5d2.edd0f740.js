@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkokd_web=self.webpackChunkokd_web||[]).push([["4527"],{29342(e){e.exports=JSON.parse('{"metadata":{"permalink":"/zh-Hans/blog/page/2","page":2,"postsPerPage":10,"totalPages":2,"totalCount":20,"previousPage":"/zh-Hans/blog","blogDescription":"Updates from the OKD team on development","blogTitle":"Blog"}}')}}]);

@@ -1,0 +1,54 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.projectSidebar.category.guides": {
+    "message": "guides",
+    "description": "The label for category 'guides' in sidebar 'projectSidebar'"
+  },
+  "sidebar.projectSidebar.category.OKD Technical Documentation": {
+    "message": "OKD Technical Documentation",
+    "description": "The label for category 'OKD Technical Documentation' in sidebar 'projectSidebar'"
+  },
+  "sidebar.projectSidebar.category.Upgrade Notes": {
+    "message": "Upgrade Notes",
+    "description": "The label for category 'Upgrade Notes' in sidebar 'projectSidebar'"
+  },
+  "sidebar.projectSidebar.category.From 4.15 to 4.17": {
+    "message": "From 4.15 to 4.17",
+    "description": "The label for category 'From 4.15 to 4.17' in sidebar 'projectSidebar'"
+  },
+  "sidebar.communitySidebar.category.wg_crc": {
+    "message": "wg_crc",
+    "description": "The label for category 'wg_crc' in sidebar 'communitySidebar'"
+  },
+  "sidebar.communitySidebar.category.wg_docs": {
+    "message": "wg_docs",
+    "description": "The label for category 'wg_docs' in sidebar 'communitySidebar'"
+  },
+  "sidebar.communitySidebar.category.wg_virt": {
+    "message": "wg_virt",
+    "description": "The label for category 'wg_virt' in sidebar 'communitySidebar'"
+  },
+  "sidebar.communitySidebar.category.working-group": {
+    "message": "working-group",
+    "description": "The label for category 'working-group' in sidebar 'communitySidebar'"
+  },
+  "sidebar.communitySidebar.category.OKD Working Group Meeting Minutes": {
+    "message": "OKD Working Group Meeting Minutes",
+    "description": "The label for category 'OKD Working Group Meeting Minutes' in sidebar 'communitySidebar'"
+  },
+  "sidebar.communitySidebar.category.2022": {
+    "message": "2022",
+    "description": "The label for category '2022' in sidebar 'communitySidebar'"
+  },
+  "sidebar.productDocsSidebar.link.Community/Project Docs": {
+    "message": "Community/Project Docs",
+    "description": "The label for link 'Community/Project Docs' in sidebar 'productDocsSidebar', linking to '/docs/project'"
+  },
+  "sidebar.productDocsSidebar.link.Product Docs": {
+    "message": "Product Docs",
+    "description": "The label for link 'Product Docs' in sidebar 'productDocsSidebar', linking to 'https://docs.okd.io/latest/'"
+  }
+}

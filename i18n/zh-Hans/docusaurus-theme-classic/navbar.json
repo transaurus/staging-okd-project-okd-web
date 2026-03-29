@@ -1,0 +1,34 @@
+{
+  "title": {
+    "message": "OKD",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "OKD Panda Mascot",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.About": {
+    "message": "About",
+    "description": "Navbar item with label About"
+  },
+  "item.label.Blog": {
+    "message": "Blog",
+    "description": "Navbar item with label Blog"
+  },
+  "item.label.Docs": {
+    "message": "Docs",
+    "description": "Navbar item with label Docs"
+  },
+  "item.label.Operators": {
+    "message": "Operators",
+    "description": "Navbar item with label Operators"
+  },
+  "item.label.Community": {
+    "message": "Community",
+    "description": "Navbar item with label Community"
+  },
+  "item.label.Enterprise": {
+    "message": "Enterprise",
+    "description": "Navbar item with label Enterprise"
+  }
+}
